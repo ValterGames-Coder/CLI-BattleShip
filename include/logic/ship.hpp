@@ -5,6 +5,8 @@
 #include "base/position.hpp"
 #include "base/cell.hpp"
 
+class Board;
+
 class Ship
 {
 private:
@@ -14,9 +16,10 @@ private:
     unsigned short health;
     unsigned short index;
 public:
-    Ship(unsigned short lenght, Board board);
+    Ship(unsigned short lenght);
+    void setBoard(Board board);
     void rotate();
     void draw(Position position);
-    void setup(Position position);
+    //void setup(Position position);
     void takeDamage(Position position);
 };

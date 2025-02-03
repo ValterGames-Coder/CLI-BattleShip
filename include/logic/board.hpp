@@ -15,6 +15,8 @@ enum BoardLayer
     Water
 };
 
+class Ship;
+
 class Board
 {
 private:

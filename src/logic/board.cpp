@@ -105,8 +105,8 @@ void Board::drawCell(Position position, Cell cell, BoardLayer layer)
 
 void Board::drawMap(std::map<const Position, Cell> map, BoardLayer layer)
 {
-    for (const auto& [position, cell] : map)
-        getBoard(layer)[position] = cell;
+    for (const auto& element : map)
+        getBoard(layer)[element.first] = element.second;
     update();
 }
 
