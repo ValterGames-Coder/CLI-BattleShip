@@ -16,8 +16,7 @@ private:
     unsigned short health;
     unsigned short index;
 public:
-    Ship(unsigned short lenght);
-    void setBoard(Board board);
+    Ship(unsigned short lenght, Board* board);
     void rotate();
     void draw(Position position);
     //void setup(Position position);

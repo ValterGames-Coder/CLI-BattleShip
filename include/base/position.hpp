@@ -27,11 +27,11 @@ struct Position
     }
 
     friend inline bool operator<(const Position& pos1, const Position& pos2) {
-        return pos1.y < pos2.y && pos1.x < pos2.x;
+        return pos1.y < pos2.y || pos1.x < pos2.x;
     }
 
     friend inline bool operator>(const Position& pos1, const Position& pos2) {
-        return pos1.y > pos2.y && pos1.x > pos2.x;
+        return pos1.y > pos2.y || pos1.x > pos2.x;
     }
 
     friend inline bool operator<=(const Position& pos, const short& point) {
@@ -43,11 +43,11 @@ struct Position
     }
 
     friend inline bool operator<(const Position& pos, const short& point) {
-        return pos.y < point && pos.x < point;
+        return pos.y < point || pos.x < point;
     }
 
     friend inline bool operator>(const Position& pos, const short& point) {
-        return pos.y > point && pos.x > point;
+        return pos.y > point || pos.x > point;
     }
 
     const Position operator+(const Position& pos) const {

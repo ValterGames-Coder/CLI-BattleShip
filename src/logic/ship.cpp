@@ -1,14 +1,10 @@
 #include "logic/ship.hpp"
 
-Ship::Ship(unsigned short lenght)
+Ship::Ship(unsigned short lenght, Board* board)
 {
     size = {1, lenght};
     health = lenght;
-}
-
-void Ship::setBoard(Board board)
-{
-    gameBoard = &board; 
+    gameBoard = board; 
 }
 
 void Ship::rotate()

@@ -18,15 +18,28 @@ void Board::update()
     {
         for (short x = 0; x < BOARD_SIZE; x++)
         {
-            Cell cell = water[{y, x}];
-            if (!shipsVisable && water[{y, x}].type == Undamaged)
-                cell = Cell(Empty);
+            Cell cell = ui[{y, x}];
+            if (cell.type == None)
+                cell = water[{y, x}];
+            // if (!shipsVisable && water[{y, x}].type == Undamaged)
+            //     cell = Cell(Empty);
             int color = cell.color;
             wattron(boardWin, COLOR_PAIR(color));
             mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
             wattroff(boardWin, COLOR_PAIR(color));
         }
     }
+
+    // for (const auto& waterElement : water)
+    // {
+    //     Cell cell = waterElement.second;
+    //     unsigned short color = cell.color;
+    //     wattron(boardWin, COLOR_PAIR(color));
+    //     mvwprintw(boardWin, waterElement.first.y + 2, waterElement.first.x * 2 + 2, "%s", cell.symbol.c_str());
+    //     napms(100);
+    //     refresh();
+    //     wattroff(boardWin, COLOR_PAIR(color));
+    // }
 
     refresh();
     wrefresh(boardWin);
@@ -83,7 +96,7 @@ Board::Board(Position boardPosition)
     drawBoard();
 }
 
-std::map<const Position, Cell>& Board::getBoard(BoardLayer layer)
+std::map<Position, Cell>& Board::getBoard(BoardLayer layer)
 {
     switch (layer)
     {
@@ -103,7 +116,7 @@ void Board::drawCell(Position position, Cell cell, BoardLayer layer)
     update();
 }
 
-void Board::drawMap(std::map<const Position, Cell> map, BoardLayer layer)
+void Board::drawMap(std::map<Position, Cell> map, BoardLayer layer)
 {
     for (const auto& element : map)
         getBoard(layer)[element.first] = element.second;
@@ -120,3 +133,5 @@ unsigned short Board::addShip(Ship* ship)
     ships.push_back(ship);
     return (unsigned short)ships.size();
 }
+
+WINDOW* Board::getWindow() { return boardWin; }

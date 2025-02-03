@@ -21,10 +21,10 @@ class Board
 {
 private:
     WINDOW* boardWin;
-    std::map<const Position, Cell> water;
+    std::map<Position, Cell> water;
     std::vector<Ship*> ships;
     //std::map<const Position, Cell> shipMap;
-    std::map<const Position, Cell> ui;
+    std::map<Position, Cell> ui;
     unsigned short height, width;
 
     void update();
@@ -36,8 +36,9 @@ public:
     //bool canAdd(std::map<const Position, Cell> map);
     //bool canAdd(const Position);
     void drawCell(Position position, Cell cell, BoardLayer layer);
-    void drawMap(std::map<const Position, Cell> map, BoardLayer layer);
+    void drawMap(std::map<Position, Cell> map, BoardLayer layer);
     unsigned short addShip(Ship* ship);
     void deleteShip(unsigned short index);
-    std::map<const Position, Cell>& getBoard(BoardLayer layer);
+    std::map<Position, Cell>& getBoard(BoardLayer layer);
+    WINDOW* getWindow();
 };
