@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "scenes/scene.cpp"
+#include "logic/cursor.hpp"
 
 Game::Game()
 {
@@ -12,7 +13,18 @@ void Game::setupGame()
 {
     gameScene = new GameScene();
     gameScene->load();
+    Ship* ship = new Ship(4, gameScene->playerBoard);
+    ship->draw({0, 0});
+    Cursor* cursor = new Cursor(gameScene->playerBoard);
+    //cursor->cursorPosition = ship->getSize();
+    wchar_t input;
+    do
+    {
+        input = cursor->readKeyboard();
+        ship->draw(cursor->cursorPosition);
+    } while (input != 10);
 }
+    
 
 void Game::rules()
 {

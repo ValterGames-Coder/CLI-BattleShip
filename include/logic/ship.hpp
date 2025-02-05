@@ -21,4 +21,5 @@ public:
     void draw(Position position);
     //void setup(Position position);
     void takeDamage(Position position);
+    std::pair<unsigned short, unsigned short> getSize();
 };

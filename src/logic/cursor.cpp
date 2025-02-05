@@ -22,10 +22,27 @@ wchar_t Cursor::readKeyboard()
     switch (input)
     {
     case KEY_UP:
-        /* code */
+        cursorPosition.y--;
+        if (cursorPosition.y < 0)
+            cursorPosition.y = 0;
         break;
-    
+    case KEY_DOWN:
+        cursorPosition.y++;
+        if (cursorPosition.y > BOARD_SIZE)
+            cursorPosition.y = BOARD_SIZE;
+        break;
+    case KEY_LEFT:
+        cursorPosition.x--;
+        if (cursorPosition.x < 0)
+            cursorPosition.x = 0;
+        break;
+    case KEY_RIGHT:
+        cursorPosition.x++;
+        if (cursorPosition.x > BOARD_SIZE)
+            cursorPosition.x = BOARD_SIZE;
+        break;
     default:
         break;
     }
+    return input;
 }

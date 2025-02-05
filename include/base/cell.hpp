@@ -19,6 +19,10 @@ struct Cell
         this->type = type;
         switch (this->type)
         {
+        case None:
+            symbol = " .";
+            color = COLOR_BLUE;
+            break;
         case Empty:
             symbol = " .";
             color = COLOR_BLUE;

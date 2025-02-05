@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 
 struct Position
 {
@@ -56,5 +57,9 @@ struct Position
 
     const Position operator+=(const Position& pos) const {
         return {(short)(y + pos.y), (short)(x + pos.x)};
+    }
+    
+    const Position operator-(const std::pair<unsigned short, unsigned short> pair) const {
+        return {(short)(y - pair.first), (short)(x - pair.second)};
     }
 };

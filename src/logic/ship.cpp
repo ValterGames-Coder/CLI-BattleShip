@@ -38,3 +38,5 @@ void Ship::takeDamage(Position position)
     if (health == 0)
         gameBoard->deleteShip(index);
 }
+
+std::pair<unsigned short, unsigned short> Ship::getSize() { return size; }

@@ -18,15 +18,28 @@ void Board::update()
     {
         for (short x = 0; x < BOARD_SIZE; x++)
         {
-            Cell cell = ui[{y, x}];
-            if (cell.type == None)
-                cell = water[{y, x}];
+            Cell cell = water[{y, x}];
             // if (!shipsVisable && water[{y, x}].type == Undamaged)
             //     cell = Cell(Empty);
             int color = cell.color;
             wattron(boardWin, COLOR_PAIR(color));
             mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
             wattroff(boardWin, COLOR_PAIR(color));
+        }
+    }
+
+    for (short y = 0; y < BOARD_SIZE; y++)
+    {
+        for (short x = 0; x < BOARD_SIZE; x++)
+        {
+            Cell* cell = &ui[{y, x}];
+            // if (!shipsVisable && water[{y, x}].type == Undamaged)
+            //     cell = Cell(Empty);
+            int color = cell->color;
+            wattron(boardWin, COLOR_PAIR(color));
+            mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell->symbol.c_str());
+            wattroff(boardWin, COLOR_PAIR(color));
+            cell->type = None;
         }
     }
 
