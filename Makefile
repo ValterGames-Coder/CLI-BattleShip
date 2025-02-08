@@ -1,5 +1,5 @@
 CXX      := -g++
-CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror
+CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror -std=c++11
 LDLIBS := -lncursesw -pthread
 LDFLAGS  := -L/usr/lib -lstdc++ -lm
 BUILD    := ./build

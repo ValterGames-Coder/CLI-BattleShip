@@ -5,6 +5,8 @@
 #include "scenes/main_menu_scene.hpp"
 #include "scenes/game_scene.hpp"
 
+class Cursor;
+
 class Game
 {
 private:
@@ -17,6 +19,7 @@ private:
     unsigned short enemyShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
 
     void setupGame();
+    void setupPlayerShips(Cursor* cursor);
     void rules();
 public:
     Game();

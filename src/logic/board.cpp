@@ -12,48 +12,123 @@ void Board::drawRectangle(Position pos1, Position pos2)
     mvwaddch(boardWin, pos2.y, pos2.x, ACS_LRCORNER);
 }
 
+std::map<Position, Cell>& Board::getBoard(BoardLayer layer)
+{
+    switch (layer)
+    {
+    case UI:
+        return uiMap;
+    case Ships:
+        return shipMap;
+    case Water:
+        return waterMap;
+    default:
+        break;
+    }
+    return waterMap;
+}
+
+bool Board::canAddShip(Position position) { return shipMap.count(position) == 0; }
+
 void Board::update()
 {
     for (short y = 0; y < BOARD_SIZE; y++)
     {
         for (short x = 0; x < BOARD_SIZE; x++)
         {
-            Cell cell = water[{y, x}];
-            // if (!shipsVisable && water[{y, x}].type == Undamaged)
-            //     cell = Cell(Empty);
+            BoardLayer layer;
+            if (uiMap.count({y, x}))
+                layer = UI;
+            else if(shipMap.count({y, x}))
+                layer = Ships;
+            else
+                layer = Water;
+            
+            Cell cell = getBoard(layer)[{y, x}];
+            if (layer == Ships && !shipsVisable && cell.type == Undamaged)
+                cell = Cell(Empty);
             int color = cell.color;
+            if (layer == UI && cell.type == Undamaged)
+                color = canAddShip({y, x}) ? COLOR_GREEN : COLOR_RED;
             wattron(boardWin, COLOR_PAIR(color));
             mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
             wattroff(boardWin, COLOR_PAIR(color));
         }
     }
-
-    for (short y = 0; y < BOARD_SIZE; y++)
-    {
-        for (short x = 0; x < BOARD_SIZE; x++)
-        {
-            Cell* cell = &ui[{y, x}];
-            // if (!shipsVisable && water[{y, x}].type == Undamaged)
-            //     cell = Cell(Empty);
-            int color = cell->color;
-            wattron(boardWin, COLOR_PAIR(color));
-            mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell->symbol.c_str());
-            wattroff(boardWin, COLOR_PAIR(color));
-            cell->type = None;
-        }
-    }
-
-    // for (const auto& waterElement : water)
+    // for (short y = 0; y < BOARD_SIZE; y++)
     // {
-    //     Cell cell = waterElement.second;
-    //     unsigned short color = cell.color;
+    //     for (short x = 0; x < BOARD_SIZE; x++)
+    //     {
+    //         Cell cell = getBoard(Water)[{y, x}];
+    //         // if (layer == Ships && !shipsVisable && cell.type == Undamaged)
+    //         //     cell = Cell(Empty);
+    //         int color = cell.color;
+    //         // if (cell.type == Undamaged)
+    //         //     color = canAddShip({y, x}) ? COLOR_GREEN : COLOR_RED;
+    //         wattron(boardWin, COLOR_PAIR(color));
+    //         mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
+    //         wattroff(boardWin, COLOR_PAIR(color));
+    //     }
+    // }
+
+    // for (auto pair : getBoard(Ships))
+    // {
+    //     int color = pair.second.color;
+    //     // if (cell.type == Undamaged)
+    //     //     color = canAddShip({y, x}) ? COLOR_GREEN : COLOR_RED;
     //     wattron(boardWin, COLOR_PAIR(color));
-    //     mvwprintw(boardWin, waterElement.first.y + 2, waterElement.first.x * 2 + 2, "%s", cell.symbol.c_str());
-    //     napms(100);
-    //     refresh();
+    //     mvwprintw(boardWin, pair.first.y + 2, pair.first.x * 2 + 2, "%s", pair.second.symbol.c_str());
     //     wattroff(boardWin, COLOR_PAIR(color));
     // }
 
+    // for (auto pair : getBoard(Ships))
+    // {
+    //     int color = pair.second.color;
+    //     if (pair.second.type == Undamaged)
+    //         color = canAddShip(pair.first) ? COLOR_GREEN : COLOR_RED;
+    //     // if (cell.type == Undamaged)
+    //     //     color = canAddShip({y, x}) ? COLOR_GREEN : COLOR_RED;
+    //     wattron(boardWin, COLOR_PAIR(color));
+    //     mvwprintw(boardWin, pair.first.y + 2, pair.first.x * 2 + 2, "%s", pair.second.symbol.c_str());
+    //     wattroff(boardWin, COLOR_PAIR(color));
+    // }
+
+    // // for (short y = 0; y < BOARD_SIZE; y++)
+    // // {
+    // //     for (short x = 0; x < BOARD_SIZE; x++)
+    // //     {
+    // //         if (getBoard(Ships).count({y, x}) == 0)
+    // //             continue;
+    // //         Cell cell = getBoard(Ships)[{y, x}];
+    // //         // if (layer == Ships && !shipsVisable && cell.type == Undamaged)
+    // //         //     cell = Cell(Empty);
+    // //         int color = cell.color;
+    // //         // if (cell.type == Undamaged)
+    // //         //     color = canAddShip({y, x}) ? COLOR_GREEN : COLOR_RED;
+    // //         wattron(boardWin, COLOR_PAIR(color));
+    // //         mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
+    // //         wattroff(boardWin, COLOR_PAIR(color));
+    // //     }
+    // // }
+
+    // for (short y = 0; y < BOARD_SIZE; y++)
+    // {
+    //     for (short x = 0; x < BOARD_SIZE; x++)
+    //     {
+    //         if (getBoard(UI).count({y, x}) == 0)
+    //             continue;
+    //         Cell cell = getBoard(UI)[{y, x}];
+    //         // if (layer == Ships && !shipsVisable && cell.type == Undamaged)
+    //         //     cell = Cell(Empty);
+    //         int color = cell.color;
+    //         if (cell.type == Undamaged)
+    //             color = canAddShip({y, x}) ? COLOR_GREEN : COLOR_RED;
+    //         wattron(boardWin, COLOR_PAIR(color));
+    //         mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
+    //         wattroff(boardWin, COLOR_PAIR(color));
+    //     }
+    // }
+    uiMap.clear();
     refresh();
     wrefresh(boardWin);
 }
@@ -63,9 +138,9 @@ void Board::drawBoard()
     short letter = 0;
     short number = 0;
 
-    for (short gridY = 0; gridY < height - 1; gridY++)
+    for (unsigned short gridY = 0; gridY < height - 1; gridY++)
     {
-        for (short gridX = 0; gridX < width - 1; gridX++)
+        for (unsigned short gridX = 0; gridX < width - 1; gridX++)
         {
             if (gridY == 0)
             {
@@ -98,35 +173,17 @@ Board::Board(Position boardPosition)
     height = BOARD_SIZE + 3;
     width = BOARD_SIZE * 2 + 3;
     for (short y = 0; y < BOARD_SIZE; y++)
-    {
         for (short x = 0; x < BOARD_SIZE; x++)
-        {
-            water[{y, x}] = Cell(Empty);
-            ui[{y, x}] = Cell(None);
-        }
-    }
+            waterMap[{y, x}] = Cell(Empty);
+    
     boardWin = newwin(height, width, boardPosition.y - (height / 2), boardPosition.x - (width / 2));
     drawBoard();
 }
 
-std::map<Position, Cell>& Board::getBoard(BoardLayer layer)
-{
-    switch (layer)
-    {
-    case UI:
-        return ui;
-    case Water:
-        return water;
-    default:
-        break;
-    }
-    return water;
-}
 
 void Board::drawCell(Position position, Cell cell, BoardLayer layer)
 {
     getBoard(layer)[position] = cell;
-    update();
 }
 
 void Board::drawMap(std::map<Position, Cell> map, BoardLayer layer)
@@ -141,10 +198,26 @@ void Board::deleteShip(unsigned short index)
     ships.erase(ships.begin() + index);
 }
 
-unsigned short Board::addShip(Ship* ship)
+bool Board::addShip(Ship* ship, Position shipPosition)
 {
-    ships.push_back(ship);
-    return (unsigned short)ships.size();
+    for (short y = 0; y < ship->getSize().first; y++)
+        for (short x = 0; x < ship->getSize().second; x++)
+            if(!canAddShip(Position{y, x} + shipPosition))
+                return false;
+    //ships.push_back(ship);
+    //ship->setIndex((unsigned short)ships.size());
+    Position shipPos;
+    for (unsigned short y = 0; y < ship->getSize().first; y++)
+    {
+        for (unsigned short x = 0; x < ship->getSize().second; x++)
+        {
+            shipPos = shipPosition + Position(y, x);
+            drawCell(shipPos, Cell(Undamaged), Ships);
+            //ship->setCell(&shipMap[shipPos], shipPos);
+        }
+    }
+    update();
+    return true;
 }
 
 WINDOW* Board::getWindow() { return boardWin; }

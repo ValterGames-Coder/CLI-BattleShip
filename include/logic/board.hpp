@@ -12,6 +12,7 @@
 enum BoardLayer
 {
     UI,
+    Ships,
     Water
 };
 
@@ -21,23 +22,21 @@ class Board
 {
 private:
     WINDOW* boardWin;
-    std::map<Position, Cell> water;
-    std::vector<Ship*> ships;
-    //std::map<const Position, Cell> shipMap;
-    std::map<Position, Cell> ui;
+    std::map<Position, Cell> waterMap;
+    std::map<Position, Cell> shipMap;
+    std::map<Position, Cell> uiMap;
     unsigned short height, width;
-
-    void update();
+    std::vector<Ship*> ships;
+    bool canAddShip(Position position);
     void drawBoard();
     void drawRectangle(Position pos1, Position pos2);
 public:
     bool shipsVisable = true;
     Board(Position boardPosition);
-    //bool canAdd(std::map<const Position, Cell> map);
-    //bool canAdd(const Position);
+    void update();
     void drawCell(Position position, Cell cell, BoardLayer layer);
     void drawMap(std::map<Position, Cell> map, BoardLayer layer);
-    unsigned short addShip(Ship* ship);
+    bool addShip(Ship* ship, Position shipPosition);
     void deleteShip(unsigned short index);
     std::map<Position, Cell>& getBoard(BoardLayer layer);
     WINDOW* getWindow();

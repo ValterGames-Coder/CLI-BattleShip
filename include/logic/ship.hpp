@@ -12,14 +12,15 @@ class Ship
 private:
     Board* gameBoard;
     std::pair<unsigned short, unsigned short> size;
-    std::map<Position, Cell*> map;
     unsigned short health;
     unsigned short index;
+    std::map<Position, Cell*> map;
 public:
     Ship(unsigned short lenght, Board* board);
     void rotate();
     void draw(Position position);
-    //void setup(Position position);
     void takeDamage(Position position);
     std::pair<unsigned short, unsigned short> getSize();
+    void setCell(Cell* cell, Position position);
+    void setIndex(unsigned short index);
 };

@@ -3,7 +3,6 @@
 
 enum CellType
 {
-    None,
     Empty,
     Locked,
     Undamaged,
@@ -14,15 +13,17 @@ enum CellType
 
 struct Cell
 {
-    Cell(CellType type = Empty)
-    { 
+    Cell(CellType type = Empty) { updateType(type); }
+
+    CellType type;
+    std::string symbol;
+    unsigned short color;
+
+    void updateType(CellType type)
+    {
         this->type = type;
         switch (this->type)
         {
-        case None:
-            symbol = " .";
-            color = COLOR_BLUE;
-            break;
         case Empty:
             symbol = " .";
             color = COLOR_BLUE;
@@ -51,8 +52,4 @@ struct Cell
             break;
         }
     }
-
-    CellType type;
-    std::string symbol;
-    unsigned short color;
 };

@@ -2,6 +2,7 @@
 
 void GameScene::load()
 {
+    curs_set(0);
     playerBoard = new Board(Position(
         (yMax / 2) - BOARD_SPACE_Y,
         (xMax / 2) - BOARD_SPACE_X

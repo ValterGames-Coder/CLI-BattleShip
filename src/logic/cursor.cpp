@@ -44,5 +44,14 @@ wchar_t Cursor::readKeyboard()
     default:
         break;
     }
+    move(cursorPosition);
     return input;
+}
+
+void Cursor::checkCollision(std::pair<unsigned short, unsigned short> size)
+{
+    if (cursorPosition.y + size.first > BOARD_SIZE)
+        move(Position(BOARD_SIZE - size.first, cursorPosition.x));
+    if (cursorPosition.x + size.second > BOARD_SIZE)
+        move(Position(cursorPosition.y, BOARD_SIZE - size.second));
 }

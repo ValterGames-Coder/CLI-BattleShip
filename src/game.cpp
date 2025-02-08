@@ -9,20 +9,37 @@ Game::Game()
     isInit = true;
 }
 
+void Game::setupPlayerShips(Cursor* cursor)
+{
+    wchar_t input;
+    for(auto size : playerShips)
+    {
+        Ship* ship = new Ship(size, gameScene->playerBoard);
+        cursor->move({0, 0});
+        do
+        {
+            input = cursor->readKeyboard();
+            if (input == 'r')
+                ship->rotate();
+            else if (input == 10)
+            {
+                bool addShip = gameScene->playerBoard->addShip(ship, cursor->cursorPosition);
+                if (addShip)
+                    break;
+            }
+            cursor->checkCollision(ship->getSize());
+            ship->draw(cursor->cursorPosition);
+        } while (1);
+    }
+}
+
 void Game::setupGame()
 {
     gameScene = new GameScene();
     gameScene->load();
-    Ship* ship = new Ship(4, gameScene->playerBoard);
-    ship->draw({0, 0});
     Cursor* cursor = new Cursor(gameScene->playerBoard);
-    //cursor->cursorPosition = ship->getSize();
-    wchar_t input;
-    do
-    {
-        input = cursor->readKeyboard();
-        ship->draw(cursor->cursorPosition);
-    } while (input != 10);
+    setupPlayerShips(cursor);
+    getch();
 }
     
 
