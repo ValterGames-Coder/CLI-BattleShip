@@ -21,6 +21,7 @@ public:
     void draw(Position position);
     void takeDamage(Position position);
     std::pair<unsigned short, unsigned short> getSize();
+    std::map<Position, Cell*> getMap();
     void setCell(Cell* cell, Position position);
     void setIndex(unsigned short index);
 };

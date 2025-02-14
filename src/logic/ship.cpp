@@ -20,13 +20,14 @@ void Ship::draw(Position position)
 
 void Ship::takeDamage(Position position)
 {
-    (*map[position]) = Cell(Hit);
+    (*map[position]).updateType(Hit);
     health--;
-    if (health == 0)
-        gameBoard->deleteShip(index);
+    // if (health == 0)
+    //     gameBoard->deleteShip(index);
 }
 
 std::pair<unsigned short, unsigned short> Ship::getSize() { return size; }
 
+std::map<Position, Cell*> Ship::getMap() { return map; }
 void Ship::setCell(Cell* cell, Position position) { map[position] = cell; }
 void Ship::setIndex(unsigned short index) { this->index = index; }

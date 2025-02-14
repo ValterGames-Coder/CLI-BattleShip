@@ -18,8 +18,10 @@ private:
     unsigned short playerShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
     unsigned short enemyShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
 
-    void setupGame();
+    void startGame();
     void setupPlayerShips(Cursor* cursor);
+    void setupEnemyShips(Board* enemyBoard);
+    void gameLoop(Cursor* cursor, Board* enemyBoard);
     void rules();
 public:
     Game();

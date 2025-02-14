@@ -22,22 +22,25 @@ class Board
 {
 private:
     WINDOW* boardWin;
-    std::map<Position, Cell> waterMap;
-    std::map<Position, Cell> shipMap;
-    std::map<Position, Cell> uiMap;
+    std::map<const Position, Cell> waterMap;
+    std::map<const Position, Cell> shipMap;
+    std::map<const Position, Cell> uiMap;
     unsigned short height, width;
-    std::vector<Ship*> ships;
-    bool canAddShip(Position position);
     void drawBoard();
     void drawRectangle(Position pos1, Position pos2);
 public:
+    std::vector<Ship*> ships;
+    std::vector<Position> getCells(CellType type);
     bool shipsVisable = true;
+    short checkBorder(short pos, short size);
+    short clamp(short point, short min, short max);
+    bool canShoot(Position position);
+    bool canAddShip(Position position);
+    Ship* getShip(Position position);
     Board(Position boardPosition);
     void update();
     void drawCell(Position position, Cell cell, BoardLayer layer);
-    void drawMap(std::map<Position, Cell> map, BoardLayer layer);
-    bool addShip(Ship* ship, Position shipPosition);
-    void deleteShip(unsigned short index);
-    std::map<Position, Cell>& getBoard(BoardLayer layer);
+    void drawMap(Position position, std::map<Position, Cell> map, BoardLayer layer);
+    std::map<const Position, Cell>& getLayer(BoardLayer layer);
     WINDOW* getWindow();
 };

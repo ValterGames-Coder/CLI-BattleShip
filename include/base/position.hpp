@@ -1,13 +1,8 @@
 #pragma once
-#include <map>
 
 struct Position
 {
-    Position(short y = 0, short x = 0)
-    {
-        this->y = y;
-        this->x = x;
-    }
+    Position(short y = 0, short x = 0) : y(y), x(x) {}
 
     short y, x;
 
@@ -16,50 +11,24 @@ struct Position
     }
 
     friend inline bool operator!=(const Position& pos1, const Position& pos2) {
-        return pos1.y != pos2.y || pos1.x != pos2.x;
-    }
-
-    friend inline bool operator<=(const Position& pos1, const Position& pos2) {
-        return pos1.y <= pos2.y && pos1.x <= pos2.x;
-    }
-    
-    friend inline bool operator>=(const Position& pos1, const Position& pos2) {
-        return pos1.y >= pos2.y && pos1.x >= pos2.x;
+        return !(pos1 == pos2);
     }
 
     friend inline bool operator<(const Position& pos1, const Position& pos2) {
-        return pos1.y < pos2.y || pos1.x < pos2.x;
-    }
-
-    friend inline bool operator>(const Position& pos1, const Position& pos2) {
-        return pos1.y > pos2.y || pos1.x > pos2.x;
-    }
-
-    friend inline bool operator<=(const Position& pos, const short& point) {
-        return pos.y <= point && pos.x <= point;
-    }
-
-    friend inline bool operator>=(const Position& pos, const short& point) {
-        return pos.y >= point && pos.x >= point;
-    }
-
-    friend inline bool operator<(const Position& pos, const short& point) {
-        return pos.y < point || pos.x < point;
-    }
-
-    friend inline bool operator>(const Position& pos, const short& point) {
-        return pos.y > point || pos.x > point;
+        return (pos1.y < pos2.y) || (pos1.y == pos2.y && pos1.x < pos2.x);
     }
 
     const Position operator+(const Position& pos) const {
-        return {(short)(y + pos.y), (short)(x + pos.x)};
+        return Position(y + pos.y, x + pos.x);
     }
 
-    const Position operator+=(const Position& pos) const {
-        return {(short)(y + pos.y), (short)(x + pos.x)};
+    Position& operator+=(const Position& pos) {
+        y += pos.y;
+        x += pos.x;
+        return *this;
     }
-    
-    // const Position operator-(const std::pair<unsigned short, unsigned short> pair) const {
-    //     return {(short)(y - pair.first), (short)(x - pair.second)};
-    // }
+
+    const Position operator-(const Position& pos) const {
+        return Position(y - pos.y, x - pos.x);
+    }
 };
