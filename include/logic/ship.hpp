@@ -16,6 +16,7 @@ private:
     unsigned short index;
     std::map<Position, Cell*> map;
 public:
+    bool isDestroyed;
     Ship(unsigned short lenght, Board* board);
     void rotate();
     void draw(Position position);

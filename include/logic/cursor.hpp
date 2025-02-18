@@ -9,7 +9,7 @@ private:
     Board* board;
     WINDOW* boardWin;
 public:
-    Position cursorPosition {0, 0};
+    Position position {0, 0};
     Cursor(Board* board);
     void move(Position newPosition);
     void setBoard(Board* board);

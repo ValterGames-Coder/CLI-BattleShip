@@ -10,8 +10,8 @@ Cursor::Cursor(Board* board) { setBoard(board); }
 
 void Cursor::move(Position newPosition)
 {
-    cursorPosition = newPosition;
-    wmove(boardWin, cursorPosition.y + 2, cursorPosition.x * 2 + 2);
+    position = newPosition;
+    wmove(boardWin, position.y + 2, position.x * 2 + 2);
 }
 
 wchar_t Cursor::readKeyboard()
@@ -22,36 +22,36 @@ wchar_t Cursor::readKeyboard()
     switch (input)
     {
     case KEY_UP:
-        cursorPosition.y--;
-        if (cursorPosition.y < 0)
-            cursorPosition.y = 0;
+        position.y--;
+        if (position.y < 0)
+            position.y = 0;
         break;
     case KEY_DOWN:
-        cursorPosition.y++;
-        if (cursorPosition.y > BOARD_SIZE)
-            cursorPosition.y = BOARD_SIZE;
+        position.y++;
+        if (position.y > BOARD_SIZE)
+            position.y = BOARD_SIZE;
         break;
     case KEY_LEFT:
-        cursorPosition.x--;
-        if (cursorPosition.x < 0)
-            cursorPosition.x = 0;
+        position.x--;
+        if (position.x < 0)
+            position.x = 0;
         break;
     case KEY_RIGHT:
-        cursorPosition.x++;
-        if (cursorPosition.x > BOARD_SIZE)
-            cursorPosition.x = BOARD_SIZE;
+        position.x++;
+        if (position.x > BOARD_SIZE)
+            position.x = BOARD_SIZE;
         break;
     default:
         break;
     }
-    move(cursorPosition);
+    move(position);
     return input;
 }
 
 void Cursor::checkCollision(std::pair<unsigned short, unsigned short> size)
 {
-    if (cursorPosition.y + size.first > BOARD_SIZE)
-        move(Position(BOARD_SIZE - size.first, cursorPosition.x));
-    if (cursorPosition.x + size.second > BOARD_SIZE)
-        move(Position(cursorPosition.y, BOARD_SIZE - size.second));
+    if (position.y + size.first > BOARD_SIZE)
+        move(Position(BOARD_SIZE - size.first, position.x));
+    if (position.x + size.second > BOARD_SIZE)
+        move(Position(position.y, BOARD_SIZE - size.second));
 }

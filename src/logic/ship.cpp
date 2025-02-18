@@ -1,4 +1,5 @@
 #include "logic/ship.hpp"
+#include "logic/ship_builder.hpp"
 
 Ship::Ship(unsigned short lenght, Board* board)
 {
@@ -7,8 +8,6 @@ Ship::Ship(unsigned short lenght, Board* board)
     gameBoard = board; 
     draw({0, 0});
 }
-
-void Ship::rotate() { size = {size.second, size.first}; }
 
 void Ship::draw(Position position)
 {
@@ -20,14 +19,19 @@ void Ship::draw(Position position)
 
 void Ship::takeDamage(Position position)
 {
+    if (isDestroyed)
+        return;
     (*map[position]).updateType(Hit);
     health--;
-    // if (health == 0)
-    //     gameBoard->deleteShip(index);
+    if (health == 0)
+    {
+        isDestroyed = true;
+        deleteShip(gameBoard, index);
+    }
 }
 
+void Ship::rotate() { size = {size.second, size.first}; }
 std::pair<unsigned short, unsigned short> Ship::getSize() { return size; }
-
 std::map<Position, Cell*> Ship::getMap() { return map; }
 void Ship::setCell(Cell* cell, Position position) { map[position] = cell; }
 void Ship::setIndex(unsigned short index) { this->index = index; }

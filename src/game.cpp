@@ -24,10 +24,10 @@ void Game::setupPlayerShips(Cursor* cursor)
             if (input == 'r')
                 ship->rotate();
             else if (input == 10)
-                if (addShip(gameScene->playerBoard, ship, cursor->cursorPosition))
+                if (addShip(gameScene->playerBoard, ship, cursor->position))
                     break;
             cursor->checkCollision(ship->getSize());
-            ship->draw(cursor->cursorPosition);
+            ship->draw(cursor->position);
         } while (1);
     }
 }
@@ -50,22 +50,24 @@ void Game::setupEnemyShips(Board* enemyBoard)
     }
 }
 
-void Game::gameLoop(Cursor* cursor, Board* enemyBoard)
+void Game::gameLoop(Cursor* cursor, Board* enemyBoard, Bot* bot)
 {
     do
     {
         wchar_t input;
         input = cursor->readKeyboard();
         cursor->checkCollision({1, 1});
-        enemyBoard->drawCell(cursor->cursorPosition, Cell(Aim), UI);
+        enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
         enemyBoard->update();
         if (input == 10) {
-            bool canShoot = enemyBoard->canShoot(cursor->cursorPosition);
+            bool canShoot = enemyBoard->canShoot(cursor->position);
             if(!canShoot)
                 continue;
-            shoot(cursor->cursorPosition, enemyBoard);
-            //bot->make_step();
-            //cursor->move(cursor->position);
+            //CellType type = shoot(cursor->position, enemyBoard);
+            // if (type == Hit)
+            //     continue;
+            bot->makeStep();
+            cursor->move(cursor->position);
         }
     } while (1);
 }
@@ -76,14 +78,15 @@ void Game::startGame()
     gameScene->load();
     Board* enemyBoard = gameScene->enemyBoard;
     Cursor* cursor = new Cursor(gameScene->playerBoard);
+    Bot* bot = new Bot(Hard, gameScene->playerBoard);
     //enemyBoard->shipsVisable = false;
     setupPlayerShips(cursor);
     setupEnemyShips(enemyBoard);
     gameScene->dialog->updateDialog(L"for move: ← → ↑ ↓ | for shoot: enter");
     cursor->move({0, 0});
-    enemyBoard->drawCell(cursor->cursorPosition, Cell(Aim), UI);
+    enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
     enemyBoard->update();
-    gameLoop(cursor, enemyBoard);
+    gameLoop(cursor, enemyBoard, bot);
     getch();
 }
     

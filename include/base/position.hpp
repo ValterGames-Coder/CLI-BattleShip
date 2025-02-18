@@ -18,6 +18,18 @@ struct Position
         return (pos1.y < pos2.y) || (pos1.y == pos2.y && pos1.x < pos2.x);
     }
 
+    friend inline bool operator>(const Position& pos1, const Position& pos2) {
+        return pos2 < pos1;
+    }
+
+    friend inline bool operator<=(const Position& pos1, const Position& pos2) {
+        return !(pos1 > pos2); 
+    }
+
+    friend inline bool operator>=(const Position& pos1, const Position& pos2) {
+        return !(pos1 < pos2);
+    }
+
     const Position operator+(const Position& pos) const {
         return Position(y + pos.y, x + pos.x);
     }

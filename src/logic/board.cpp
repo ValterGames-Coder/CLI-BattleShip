@@ -58,13 +58,17 @@ bool Board::canAddShip(Position position)
 
 bool Board::canShoot(Position position)
 {
-    CellType cell = getLayer(Ships)[position].type;
-    if (cell == Hit)
-        return true;
-    cell = getLayer(Water)[position].type;
-    if (cell == Missed)
-        return false;
-    return true;
+    CellType cell;
+    if (getLayer(Ships).count(position))
+    {
+        cell = getLayer(Ships)[position].type;
+        return cell == Undamaged;
+    }
+    else
+    {
+        cell = getLayer(Water)[position].type;
+        return !(cell == Missed);
+    }
 }
 
 Ship* Board::getShip(Position position)
@@ -97,6 +101,7 @@ void Board::update()
                 color = canAddShip({y, x}) ? COLOR_GREEN : COLOR_RED;
             wattron(boardWin, COLOR_PAIR(color));
             mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
+            //mvwprintw(boardWin, y + 2, x * 2 + 2, "%i", cell.type);
             wattroff(boardWin, COLOR_PAIR(color));
         }
     }

@@ -6,12 +6,13 @@ CellType shoot(Position position, Board* board)
     {
         Ship* ship = board->getShip(position);
         ship->takeDamage(position);
+        board->update();
         return Hit;
     }
     else
     {
-        wprintw(stdscr, "%li", board->getLayer(Water).count(position));
         board->getLayer(Water)[position].updateType(Missed);
+        board->update();
         return Missed;
     }
 }

@@ -4,6 +4,7 @@
 #include <ctime>
 #include "scenes/main_menu_scene.hpp"
 #include "scenes/game_scene.hpp"
+#include "logic/bot.hpp"
 
 class Cursor;
 
@@ -21,7 +22,7 @@ private:
     void startGame();
     void setupPlayerShips(Cursor* cursor);
     void setupEnemyShips(Board* enemyBoard);
-    void gameLoop(Cursor* cursor, Board* enemyBoard);
+    void gameLoop(Cursor* cursor, Board* enemyBoard, Bot* bot);
     void rules();
 public:
     Game();
