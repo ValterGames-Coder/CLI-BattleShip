@@ -40,7 +40,7 @@ public:
     Board(Position boardPosition);
     void update();
     void drawCell(Position position, Cell cell, BoardLayer layer);
-    void drawMap(Position position, std::map<Position, Cell> map, BoardLayer layer);
+    void drawMap(Position position, std::map<const Position, Cell> map, BoardLayer layer);
     std::map<const Position, Cell>& getLayer(BoardLayer layer);
     WINDOW* getWindow();
 };

@@ -1,16 +1,8 @@
 #pragma once
 #include "logic/board.hpp"
 
-enum Difficulty
-{
-    Easy = 10,
-    Normal = 5,
-    Hard = 0
-};
-
 enum BotState
 {
-    MissedShoot,
     RandomShoot,
     FindDirection,
     FishiningOff
@@ -21,7 +13,6 @@ class Bot
 private:
     Board* playerBoard;
     BotState botState;
-    unsigned short missedSteps = 10;
     unsigned short shootDirection = 0;
     std::vector<Position> shootDirections = 
     {
@@ -33,11 +24,10 @@ private:
     Position currentCursorPosition;
     Position shipPosition;
     Ship* currentShip = nullptr;
-    void missedShoot();
     void randomShoot();
     void findDirection();
     void fishiningOff();
 public:
-    Bot(Difficulty difficulty, Board* playerBoard);
+    Bot(Board* playerBoard);
     void makeStep();
 };

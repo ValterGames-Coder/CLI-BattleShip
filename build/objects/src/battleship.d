@@ -4,4 +4,4 @@ build/objects/src/battleship.o: src/battleship.cpp \
  include/scenes/main_menu_scene.hpp include/scenes/scene.hpp \
  include/base/ascii.hpp include/ui/panel.hpp \
  include/scenes/game_scene.hpp include/ui/dialog.hpp \
- include/logic/bot.hpp
+ include/scenes/rules_scene.hpp include/logic/bot.hpp

@@ -12,8 +12,11 @@ class GameScene : public Scene
 {
 public:
     void load() override;
+    void win();
+    void lose();
 
     Board* playerBoard;
     Board* enemyBoard;
-    Dialog* dialog;
+    Dialog* playerShipsDialog = nullptr;
+    Dialog* enemyShipsDialog = nullptr;
 };

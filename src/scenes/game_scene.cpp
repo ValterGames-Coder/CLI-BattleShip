@@ -1,4 +1,5 @@
 #include "scenes/game_scene.hpp"
+#include "base/ascii.hpp"
 
 void GameScene::load()
 {
@@ -11,11 +12,26 @@ void GameScene::load()
         (yMax / 2) - BOARD_SPACE_Y,
         (xMax / 2) + BOARD_SPACE_X
     ));
-    // Ship* ship = new Ship(4, playerBoard);
-    // ship->draw({3, 2});
-    dialog = new Dialog(Position((yMax / 2) + 5, (xMax / 2)), 
-    L"for move: ← → ↑ ↓ | for rotate: r | for set: enter");
+    // dialog = new Dialog(Position((yMax / 2) + 5, (xMax / 2)), 
+    // L"for move: ← → ↑ ↓ | for rotate: r | for set: enter");
     wrefresh(sceneWin);
     refresh();
-    //dialog->updateDialog(L"Skibidi dop dop");
+}
+
+void GameScene::win()
+{
+    wclear(sceneWin);
+    unsigned short logoLines = 0;
+    Position winSize = getSize("./img/win.txt");
+    Position winPosition {(short)(yMax / 2 - winSize.y / 2), (short)(xMax / 2 - winSize.x / 2)};
+    printImage(sceneWin, winPosition, "./img/win.txt", logoLines, COLOR_YELLOW);
+}
+
+void GameScene::lose()
+{
+    wclear(sceneWin);
+    unsigned short logoLines = 0;
+    Position loseSize = getSize("./img/lose.txt");
+    Position losePosition {(short)(yMax / 2 - loseSize.y / 2), (short)(xMax / 2 - loseSize.x / 2)};
+    printImage(sceneWin, losePosition, "./img/lose.txt", logoLines, COLOR_RED);
 }

@@ -14,15 +14,17 @@ private:
     std::pair<unsigned short, unsigned short> size;
     unsigned short health;
     unsigned short index;
-    std::map<Position, Cell*> map;
+    std::map<const Position, Cell*> map;
 public:
     bool isDestroyed;
     Ship(unsigned short lenght, Board* board);
+    Position cursorPosition;
+    std::map<const Position, Cell> locked;
     void rotate();
     void draw(Position position);
     void takeDamage(Position position);
     std::pair<unsigned short, unsigned short> getSize();
-    std::map<Position, Cell*> getMap();
+    std::map<const Position, Cell*> getMap();
     void setCell(Cell* cell, Position position);
     void setIndex(unsigned short index);
 };

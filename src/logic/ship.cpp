@@ -26,12 +26,12 @@ void Ship::takeDamage(Position position)
     if (health == 0)
     {
         isDestroyed = true;
-        deleteShip(gameBoard, index);
+        deleteShip(gameBoard, position);
     }
 }
 
 void Ship::rotate() { size = {size.second, size.first}; }
 std::pair<unsigned short, unsigned short> Ship::getSize() { return size; }
-std::map<Position, Cell*> Ship::getMap() { return map; }
+std::map<const Position, Cell*> Ship::getMap() { return map; }
 void Ship::setCell(Cell* cell, Position position) { map[position] = cell; }
 void Ship::setIndex(unsigned short index) { this->index = index; }

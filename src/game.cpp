@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "game.hpp"
 #include "scenes/scene.cpp"
 #include "logic/cursor.hpp"
@@ -9,6 +10,38 @@ Game::Game()
     srand(time(NULL));
     getmaxyx(stdscr, yMax, xMax);
     isInit = true;
+}
+
+void Game::updateDialogs()
+{
+    unsigned short playerNumberOfShips = std::count_if(
+        gameScene->playerBoard->ships.begin(), 
+        gameScene->playerBoard->ships.end(),
+        [&](Ship* ship) { return ship->isDestroyed == false; });
+    unsigned short enemyNumberOfShips = std::count_if(
+        gameScene->enemyBoard->ships.begin(), 
+        gameScene->enemyBoard->ships.end(),
+        [&](Ship* ship) { return ship->isDestroyed == false; });
+    wchar_t enemyShipsDialogText[20];
+    wchar_t playerShipsDialogText[20];
+    std::swprintf(playerShipsDialogText, sizeof(playerShipsDialogText) / sizeof(wchar_t), L"Корабли: %i", playerNumberOfShips);
+    std::swprintf(enemyShipsDialogText, sizeof(enemyShipsDialogText) / sizeof(wchar_t), L"Корабли: %i", enemyNumberOfShips);
+    if (gameScene->playerShipsDialog == nullptr)
+    {
+        gameScene->playerShipsDialog = new Dialog(Position(
+            (yMax / 2) + BOARD_SPACE_Y * 1.5,
+            (xMax / 2) - BOARD_SPACE_X
+        ), playerShipsDialogText, true, 18);
+        gameScene->enemyShipsDialog = new Dialog(Position(
+            (yMax / 2) + BOARD_SPACE_Y * 1.5,
+            (xMax / 2) + BOARD_SPACE_X
+        ), enemyShipsDialogText, true, 18);
+    }
+    else
+    {
+        gameScene->playerShipsDialog->updateDialog(playerShipsDialogText);
+        gameScene->enemyShipsDialog->updateDialog(enemyShipsDialogText);
+    }
 }
 
 void Game::setupPlayerShips(Cursor* cursor)
@@ -50,10 +83,44 @@ void Game::setupEnemyShips(Board* enemyBoard)
     }
 }
 
+void Game::checkState()
+{
+    unsigned short enemyNumberOfShips = std::count_if(
+        gameScene->enemyBoard->ships.begin(), 
+        gameScene->enemyBoard->ships.end(),
+        [&](Ship* ship) { return ship->isDestroyed == false; });
+    if (enemyNumberOfShips == 0)
+    {
+        state = Win;
+        gameScene->win();
+        return;
+    }
+    unsigned short playerNumberOfShips = std::count_if(
+        gameScene->playerBoard->ships.begin(), 
+        gameScene->playerBoard->ships.end(),
+        [&](Ship* ship) { return ship->isDestroyed == false; });
+    if (playerNumberOfShips == 0)
+    {
+        state = Lose;
+        gameScene->lose();
+        return;
+    }
+}
+
 void Game::gameLoop(Cursor* cursor, Board* enemyBoard, Bot* bot)
 {
+    setupPlayerShips(cursor);
+    setupEnemyShips(enemyBoard);
+    state = Play;
+    cursor->move({0, 0});
+    enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
+    enemyBoard->update();
     do
     {
+        checkState();
+        if (state != Play)
+            break;
+        updateDialogs();
         wchar_t input;
         input = cursor->readKeyboard();
         cursor->checkCollision({1, 1});
@@ -63,13 +130,15 @@ void Game::gameLoop(Cursor* cursor, Board* enemyBoard, Bot* bot)
             bool canShoot = enemyBoard->canShoot(cursor->position);
             if(!canShoot)
                 continue;
-            //CellType type = shoot(cursor->position, enemyBoard);
-            // if (type == Hit)
-            //     continue;
+            CellType type = shoot(cursor->position, enemyBoard);
+            if (type == Hit)
+                continue;
             bot->makeStep();
             cursor->move(cursor->position);
         }
     } while (1);
+    getch();
+    run();
 }
 
 void Game::startGame()
@@ -78,22 +147,17 @@ void Game::startGame()
     gameScene->load();
     Board* enemyBoard = gameScene->enemyBoard;
     Cursor* cursor = new Cursor(gameScene->playerBoard);
-    Bot* bot = new Bot(Hard, gameScene->playerBoard);
-    //enemyBoard->shipsVisable = false;
-    setupPlayerShips(cursor);
-    setupEnemyShips(enemyBoard);
-    gameScene->dialog->updateDialog(L"for move: ← → ↑ ↓ | for shoot: enter");
-    cursor->move({0, 0});
-    enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
-    enemyBoard->update();
+    Bot* bot = new Bot(gameScene->playerBoard);
+    enemyBoard->shipsVisable = false;
     gameLoop(cursor, enemyBoard, bot);
-    getch();
 }
     
 
 void Game::rules()
 {
-    // code
+    rulesScene = new RulesScene();
+    rulesScene->load();
+    run();
 }
 
 void Game::run()

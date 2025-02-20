@@ -4,4 +4,4 @@
 #include "base/position.hpp"
 
 bool addShip(Board* board, Ship* ship, Position shipPosition);
-void deleteShip(Board* board, unsigned short index);
+void deleteShip(Board* board, Position position);

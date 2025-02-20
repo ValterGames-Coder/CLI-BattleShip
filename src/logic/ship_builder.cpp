@@ -7,7 +7,9 @@ bool addShip(Board* board, Ship* ship, Position shipPosition)
             if(!board->canAddShip(Position(y, x) + shipPosition))
                 return false;
     board->ships.push_back(ship);
-    ship->setIndex((unsigned short)board->ships.size());
+    Ship* currentShip = board->ships.back();
+    unsigned short index = board->ships.size() - 1;
+    currentShip->setIndex(index);
     Position shipPos;
 
     Position lockedPos(shipPosition.y - 1, shipPosition.x - 1);
@@ -18,26 +20,32 @@ bool addShip(Board* board, Ship* ship, Position shipPosition)
     Position cursorPos(board->clamp(lockedPos.y, 0, BOARD_SIZE),
                    board->clamp(lockedPos.x, 0, BOARD_SIZE));
 
-    std::map<Position, Cell> locked;
+    std::map<const Position, Cell> locked;
     for (short y = 0; y < lockedSizePos.y; y++)
         for (short x = 0; x < lockedSizePos.x; x++)
             locked[{y,x}] = Cell(Locked);
     board->drawMap(cursorPos, locked, Water);
+    for (auto& lock : locked)
+        lock.second.updateType(Missed);
+    currentShip->cursorPosition = cursorPos;
+    currentShip->locked = locked;
 
-    for (short y = 0; y < ship->getSize().first; y++)
+    for (short y = 0; y < currentShip->getSize().first; y++)
     {
-        for (short x = 0; x < ship->getSize().second; x++)
+        for (short x = 0; x < currentShip->getSize().second; x++)
         {
             shipPos = shipPosition + Position(y, x);
             board->drawCell(shipPos, Cell(Undamaged), Ships);
-            ship->setCell(&board->getLayer(Ships)[shipPos], shipPos);
+            currentShip->setCell(&board->getLayer(Ships)[shipPos], shipPos);
         }
     }
     board->update();
     return true;
 }
 
-void deleteShip(Board* board, unsigned short index)
+void deleteShip(Board* board, Position position)
 {
-    board->ships.erase(board->ships.begin() + index);
+    Ship* ship = board->getShip(position);
+    board->drawMap(ship->cursorPosition, ship->locked, Water);
+    //board->ships.erase(board->ships.begin() + index);
 }
