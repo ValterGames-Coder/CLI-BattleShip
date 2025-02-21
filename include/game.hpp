@@ -17,6 +17,12 @@ enum GameState
     Lose
 };
 
+enum GameType
+{
+    PlayerVSPlayer,
+    PlayerVSBot
+};
+
 class Game
 {
 private:
@@ -26,14 +32,15 @@ private:
     GameScene* gameScene;
     RulesScene* rulesScene;
     GameState state = Setup;
+    GameType gameType;
 
     unsigned short playerShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
     unsigned short enemyShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
 
     void startGame();
-    void setupPlayerShips(Cursor* cursor);
+    void setupPlayerShips(Cursor* cursor, Board* board);
     void setupEnemyShips(Board* enemyBoard);
-    void gameLoop(Cursor* cursor, Board* enemyBoard, Bot* bot);
+    void gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot = nullptr);
     void updateDialogs();
     void checkState();
     void rules();

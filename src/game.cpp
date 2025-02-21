@@ -44,12 +44,12 @@ void Game::updateDialogs()
     }
 }
 
-void Game::setupPlayerShips(Cursor* cursor)
+void Game::setupPlayerShips(Cursor* cursor, Board* board)
 {
     wchar_t input;
     for(auto size : playerShips)
     {
-        Ship* ship = new Ship(size, gameScene->playerBoard);
+        Ship* ship = new Ship(size, board);
         cursor->move({0, 0});
         do
         {
@@ -57,7 +57,7 @@ void Game::setupPlayerShips(Cursor* cursor)
             if (input == 'r')
                 ship->rotate();
             else if (input == 10)
-                if (addShip(gameScene->playerBoard, ship, cursor->position))
+                if (addShip(board, ship, cursor->position))
                     break;
             cursor->checkCollision(ship->getSize());
             ship->draw(cursor->position);
@@ -91,9 +91,18 @@ void Game::checkState()
         [&](Ship* ship) { return ship->isDestroyed == false; });
     if (enemyNumberOfShips == 0)
     {
-        state = Win;
-        gameScene->win();
-        return;
+        if (gameType == PlayerVSBot)
+        {
+            state = Win;
+            gameScene->endMenu("./img/win.txt", COLOR_YELLOW);
+            return;
+        }
+        else
+        {
+            state = Win;
+            gameScene->endMenu("./img/player1win.txt", COLOR_YELLOW);
+            return;
+        }
     }
     unsigned short playerNumberOfShips = std::count_if(
         gameScene->playerBoard->ships.begin(), 
@@ -101,40 +110,69 @@ void Game::checkState()
         [&](Ship* ship) { return ship->isDestroyed == false; });
     if (playerNumberOfShips == 0)
     {
-        state = Lose;
-        gameScene->lose();
-        return;
+        if (gameType == PlayerVSBot)
+        {
+            state = Lose;
+            gameScene->endMenu("./img/lose.txt", COLOR_RED);
+            return;
+        }
+        else
+        {
+            state = Win;
+            gameScene->endMenu("./img/player2win.txt", COLOR_YELLOW);
+            return;
+        }
     }
 }
 
-void Game::gameLoop(Cursor* cursor, Board* enemyBoard, Bot* bot)
+void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot)
 {
-    setupPlayerShips(cursor);
-    setupEnemyShips(enemyBoard);
+    setupPlayerShips(cursor, playerBoard);
+    if (gameType == PlayerVSBot)
+    {
+        enemyBoard->shipsVisable = false;
+        setupEnemyShips(enemyBoard);
+    }
+    else if (gameType == PlayerVSPlayer)
+    {
+        playerBoard->shipsVisable = false;
+        playerBoard->update();
+        setupPlayerShips(cursor, enemyBoard);
+        enemyBoard->shipsVisable = false;
+    }
     state = Play;
     cursor->move({0, 0});
-    enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
-    enemyBoard->update();
+    // enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
+    // enemyBoard->update();
+    int steps = 0;
+    Board* currentBoard;
     do
     {
         checkState();
         if (state != Play)
             break;
         updateDialogs();
+        currentBoard = steps % 2 == 0 ? enemyBoard : playerBoard;
         wchar_t input;
+        cursor->setBoard(currentBoard);
+        currentBoard->drawCell(cursor->position, Cell(Aim), UI);
+        currentBoard->update();
         input = cursor->readKeyboard();
         cursor->checkCollision({1, 1});
-        enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
-        enemyBoard->update();
+        //currentBoard->drawCell(cursor->position, Cell(Aim), UI);
         if (input == 10) {
-            bool canShoot = enemyBoard->canShoot(cursor->position);
+            bool canShoot = currentBoard->canShoot(cursor->position);
             if(!canShoot)
                 continue;
-            CellType type = shoot(cursor->position, enemyBoard);
+            CellType type = shoot(cursor->position, currentBoard);
             if (type == Hit)
                 continue;
-            bot->makeStep();
-            cursor->move(cursor->position);
+            if (gameType == PlayerVSBot)
+            {
+                bot->makeStep();
+                cursor->move(cursor->position);
+            }
+            steps++;
         }
     } while (1);
     getch();
@@ -146,10 +184,17 @@ void Game::startGame()
     gameScene = new GameScene();
     gameScene->load();
     Board* enemyBoard = gameScene->enemyBoard;
-    Cursor* cursor = new Cursor(gameScene->playerBoard);
-    Bot* bot = new Bot(gameScene->playerBoard);
-    enemyBoard->shipsVisable = false;
-    gameLoop(cursor, enemyBoard, bot);
+    Board* playerBoard = gameScene->playerBoard;
+    Cursor* cursor = new Cursor(playerBoard);
+    if (gameType == PlayerVSBot)
+    {
+        Bot* bot = new Bot(playerBoard);
+        gameLoop(cursor, playerBoard, enemyBoard, bot);
+    }
+    else if (gameType == PlayerVSPlayer)
+    {
+        gameLoop(cursor, playerBoard, enemyBoard);
+    }
 }
     
 
@@ -169,8 +214,16 @@ void Game::run()
     mainMenuScene->load();
     std::string input = mainMenuScene->getInput();
     
-    if (input == "Start Game")
+    if (input == "Player vs Player")
+    {
+        gameType = PlayerVSPlayer;
         startGame();
+    }
+    else if (input == "Player vs Bot")
+    {
+        gameType = PlayerVSBot;
+        startGame();
+    }
     else if (input == "Rules")
         rules();
     else if (input == "Exit")

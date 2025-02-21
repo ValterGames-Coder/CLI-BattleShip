@@ -12,8 +12,7 @@ class GameScene : public Scene
 {
 public:
     void load() override;
-    void win();
-    void lose();
+    void endMenu(const char* img, unsigned short color);
 
     Board* playerBoard;
     Board* enemyBoard;

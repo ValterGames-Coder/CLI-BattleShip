@@ -18,18 +18,10 @@ void GameScene::load()
     refresh();
 }
 
-void GameScene::win()
+void GameScene::endMenu(const char* file, unsigned short color)
 {
     wclear(sceneWin);
-    Position winSize = getSize("./img/win.txt");
-    Position winPosition {(short)(yMax / 2 - winSize.y / 2), (short)(xMax / 2 - winSize.x / 2)};
-    printImage(sceneWin, winPosition, "./img/win.txt", COLOR_YELLOW);
-}
-
-void GameScene::lose()
-{
-    wclear(sceneWin);
-    Position loseSize = getSize("./img/lose.txt");
-    Position losePosition {(short)(yMax / 2 - loseSize.y / 2), (short)(xMax / 2 - loseSize.x / 2)};
-    printImage(sceneWin, losePosition, "./img/lose.txt", COLOR_RED);
+    Position fileSize = getSize(file);
+    Position winPosition {(short)(yMax / 2 - fileSize.y / 2), (short)(xMax / 2 - fileSize.x / 2)};
+    printImage(sceneWin, winPosition, file, color);
 }

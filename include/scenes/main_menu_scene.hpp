@@ -10,7 +10,7 @@ class MainMenuScene : public Scene
 {
 private:
     unsigned short selected;
-    std::vector<std::string> options {"Start Game", "Rules", "Exit"};
+    std::vector<std::string> options {"Player vs Player", "Player vs Bot", "Rules", "Exit"};
 public:
     void load() override;
     std::string getInput();

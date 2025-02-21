@@ -10,10 +10,10 @@ void MainMenuScene::load()
     Position startShipPosition {(short)(yMax / 2 - shipSize.y / 2 - logoSize.y / 2), (short)(xMax - shipSize.x)};
     Position endShipPosition {(short)(yMax / 2 - shipSize.y / 2 - logoSize.y / 2), (short)(xMax / 2 - shipSize.x / 2)};
     
-    Animation::move(sceneWin, startShipPosition, endShipPosition, "./img/ship.txt", 2, COLOR_CYAN);
+    Animation::move(sceneWin, startShipPosition, endShipPosition, "./img/ship.txt", 1, COLOR_CYAN);
     printImage(sceneWin, logoPosition, "./img/logo.txt", COLOR_CYAN);
-    
-    Position panelPosition {(short)(yMax / 2 + (logoSize.y + shipSize.y) / 2), (short)(xMax / 2 - 7)};
+    //printf("Ship count here is %i and %i df-!d,{}{SScf}sdouty");
+    Position panelPosition {(short)(yMax / 2 + (logoSize.y + shipSize.y) / 2), (short)(xMax / 2)};
     Panel* panel = new Panel(panelPosition, options);
     selected = panel->getSelectedItem();
 }

@@ -5,8 +5,11 @@ Panel::Panel(Position position, std::vector<std::string> options)
 {
     this->options = options;
     optionsSize = (short)this->options.size();
-    std::string max_element = *std::max_element(this->options.begin(), this->options.end());
-    panelMenu = newwin(optionsSize + 2, max_element.length() + 2, position.y, position.x);
+    std::string max_element = "";
+    for (auto& option : options)
+        if (option.length() > max_element.length())
+            max_element = option;
+    panelMenu = newwin(optionsSize + 2, max_element.size() + 2, position.y, position.x - max_element.length() / 2);
     box(panelMenu, 0, 0);
     refresh();
     wrefresh(panelMenu);
