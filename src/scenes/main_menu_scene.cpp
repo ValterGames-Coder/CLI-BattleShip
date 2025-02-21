@@ -10,8 +10,8 @@ void MainMenuScene::load()
     Position startShipPosition {(short)(yMax / 2 - shipSize.y / 2 - logoSize.y / 2), (short)(xMax - shipSize.x)};
     Position endShipPosition {(short)(yMax / 2 - shipSize.y / 2 - logoSize.y / 2), (short)(xMax / 2 - shipSize.x / 2)};
     
-    Animation::move(sceneWin, startShipPosition, endShipPosition, "./img/ship.txt", 2, COLOR_BLUE);
-    printImage(sceneWin, logoPosition, "./img/logo.txt", COLOR_BLUE);
+    Animation::move(sceneWin, startShipPosition, endShipPosition, "./img/ship.txt", 2, COLOR_CYAN);
+    printImage(sceneWin, logoPosition, "./img/logo.txt", COLOR_CYAN);
     
     Position panelPosition {(short)(yMax / 2 + (logoSize.y + shipSize.y) / 2), (short)(xMax / 2 - 7)};
     Panel* panel = new Panel(panelPosition, options);

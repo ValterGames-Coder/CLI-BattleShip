@@ -24,8 +24,8 @@ void Game::updateDialogs()
         [&](Ship* ship) { return ship->isDestroyed == false; });
     wchar_t enemyShipsDialogText[20];
     wchar_t playerShipsDialogText[20];
-    std::swprintf(playerShipsDialogText, sizeof(playerShipsDialogText) / sizeof(wchar_t), L"Корабли: %i", playerNumberOfShips);
-    std::swprintf(enemyShipsDialogText, sizeof(enemyShipsDialogText) / sizeof(wchar_t), L"Корабли: %i", enemyNumberOfShips);
+    std::swprintf(playerShipsDialogText, sizeof(playerShipsDialogText) / sizeof(wchar_t), L"Ships: %i", playerNumberOfShips);
+    std::swprintf(enemyShipsDialogText, sizeof(enemyShipsDialogText) / sizeof(wchar_t), L"Ships: %i", enemyNumberOfShips);
     if (gameScene->playerShipsDialog == nullptr)
     {
         gameScene->playerShipsDialog = new Dialog(Position(
