@@ -18,7 +18,7 @@ Position getSize(const char* fileName)
     return {height, widht};
 }
 
-void printImage(WINDOW* win, Position position, const char* fileName, unsigned short& numberOfLines, unsigned short color)
+void printImage(WINDOW* win, Position position, const char* fileName, unsigned short color)
 {
     std::wifstream file;
     std::wstring line;
@@ -43,5 +43,4 @@ void printImage(WINDOW* win, Position position, const char* fileName, unsigned s
     file.close();
     wattroff(win, COLOR_PAIR(color));
     refresh();
-    numberOfLines = i;
 }

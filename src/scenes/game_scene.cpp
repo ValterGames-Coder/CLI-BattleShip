@@ -21,17 +21,15 @@ void GameScene::load()
 void GameScene::win()
 {
     wclear(sceneWin);
-    unsigned short logoLines = 0;
     Position winSize = getSize("./img/win.txt");
     Position winPosition {(short)(yMax / 2 - winSize.y / 2), (short)(xMax / 2 - winSize.x / 2)};
-    printImage(sceneWin, winPosition, "./img/win.txt", logoLines, COLOR_YELLOW);
+    printImage(sceneWin, winPosition, "./img/win.txt", COLOR_YELLOW);
 }
 
 void GameScene::lose()
 {
     wclear(sceneWin);
-    unsigned short logoLines = 0;
     Position loseSize = getSize("./img/lose.txt");
     Position losePosition {(short)(yMax / 2 - loseSize.y / 2), (short)(xMax / 2 - loseSize.x / 2)};
-    printImage(sceneWin, losePosition, "./img/lose.txt", logoLines, COLOR_RED);
+    printImage(sceneWin, losePosition, "./img/lose.txt", COLOR_RED);
 }

@@ -15,8 +15,8 @@
               \______\_________/
 
 
-    +--------REMEMBER!---------+
-    | Move ship/cursor: Arrows |
-    | Setup ship/shoot: Enter  |
-    | Rotate ship: R           |
-    +--------------------------+
+    +----------REMEMBER----------+
+    | Move ship/cursor: [Arrows] |
+    | Setup ship/shoot: [Enter]  |
+    | Rotate ship: [R]           |
+    +----------------------------+

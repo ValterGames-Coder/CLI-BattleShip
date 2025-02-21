@@ -43,4 +43,8 @@ struct Position
     const Position operator-(const Position& pos) const {
         return Position(y - pos.y, x - pos.x);
     }
+
+    const Position operator*(const double& point) const {
+        return Position(y * point, x * point);
+    }
 };

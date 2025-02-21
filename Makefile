@@ -12,6 +12,7 @@ SRC      :=                        \
    $(wildcard src/ui/*.cpp)        \
    $(wildcard src/base/*.cpp)      \
    $(wildcard src/logic/*.cpp)     \
+   $(wildcard src/animation/*.cpp) \
    $(wildcard src/*.cpp)           \
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
