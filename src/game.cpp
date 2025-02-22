@@ -142,8 +142,8 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
     }
     state = Play;
     cursor->move({0, 0});
-    // enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
-    // enemyBoard->update();
+    enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
+    enemyBoard->update();
     int steps = 0;
     Board* currentBoard;
     do
@@ -155,11 +155,10 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
         currentBoard = steps % 2 == 0 ? enemyBoard : playerBoard;
         wchar_t input;
         cursor->setBoard(currentBoard);
+        input = cursor->readKeyboard();
         currentBoard->drawCell(cursor->position, Cell(Aim), UI);
         currentBoard->update();
-        input = cursor->readKeyboard();
         cursor->checkCollision({1, 1});
-        //currentBoard->drawCell(cursor->position, Cell(Aim), UI);
         if (input == 10) {
             bool canShoot = currentBoard->canShoot(cursor->position);
             if(!canShoot)
@@ -172,7 +171,10 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
                 bot->makeStep();
                 cursor->move(cursor->position);
             }
-            steps++;
+            else
+            {
+                steps++;
+            }
         }
     } while (1);
     getch();
