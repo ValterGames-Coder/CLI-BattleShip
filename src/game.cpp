@@ -12,35 +12,24 @@ Game::Game()
     isInit = true;
 }
 
-void Game::updateDialogs()
+void Game::updateDialog(Board* board, Dialog* dialog, short multiply)
 {
-    unsigned short playerNumberOfShips = std::count_if(
-        gameScene->playerBoard->ships.begin(), 
-        gameScene->playerBoard->ships.end(),
+    unsigned short numberOfShips = std::count_if(
+        board->ships.begin(), 
+        board->ships.end(),
         [&](Ship* ship) { return ship->isDestroyed == false; });
-    unsigned short enemyNumberOfShips = std::count_if(
-        gameScene->enemyBoard->ships.begin(), 
-        gameScene->enemyBoard->ships.end(),
-        [&](Ship* ship) { return ship->isDestroyed == false; });
-    wchar_t enemyShipsDialogText[20];
-    wchar_t playerShipsDialogText[20];
-    std::swprintf(playerShipsDialogText, sizeof(playerShipsDialogText) / sizeof(wchar_t), L"Ships: %i", playerNumberOfShips);
-    std::swprintf(enemyShipsDialogText, sizeof(enemyShipsDialogText) / sizeof(wchar_t), L"Ships: %i", enemyNumberOfShips);
-    if (gameScene->playerShipsDialog == nullptr)
+    wchar_t shipsDialogText[20];
+    std::swprintf(shipsDialogText, sizeof(shipsDialogText) / sizeof(wchar_t), L"Ships: %i", numberOfShips);
+    if (dialog == nullptr)
     {
-        gameScene->playerShipsDialog = new Dialog(Position(
+        dialog = new Dialog(Position(
             (yMax / 2) + BOARD_SPACE_Y * 1.5,
-            (xMax / 2) - BOARD_SPACE_X
-        ), playerShipsDialogText, true, 18);
-        gameScene->enemyShipsDialog = new Dialog(Position(
-            (yMax / 2) + BOARD_SPACE_Y * 1.5,
-            (xMax / 2) + BOARD_SPACE_X
-        ), enemyShipsDialogText, true, 18);
+            (xMax / 2) + BOARD_SPACE_X * multiply
+        ), shipsDialogText, true, 18);
     }
     else
     {
-        gameScene->playerShipsDialog->updateDialog(playerShipsDialogText);
-        gameScene->enemyShipsDialog->updateDialog(enemyShipsDialogText);
+        dialog->updateDialog(shipsDialogText);
     }
 }
 
@@ -83,7 +72,7 @@ void Game::setupEnemyShips(Board* enemyBoard)
     }
 }
 
-void Game::checkState()
+void Game::checkGameState()
 {
     unsigned short enemyNumberOfShips = std::count_if(
         gameScene->enemyBoard->ships.begin(), 
@@ -127,19 +116,6 @@ void Game::checkState()
 
 void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot)
 {
-    setupPlayerShips(cursor, playerBoard);
-    if (gameType == PlayerVSBot)
-    {
-        enemyBoard->shipsVisable = false;
-        setupEnemyShips(enemyBoard);
-    }
-    else if (gameType == PlayerVSPlayer)
-    {
-        playerBoard->shipsVisable = false;
-        playerBoard->update();
-        setupPlayerShips(cursor, enemyBoard);
-        enemyBoard->shipsVisable = false;
-    }
     state = Play;
     cursor->move({0, 0});
     enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
@@ -148,10 +124,11 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
     Board* currentBoard;
     do
     {
-        checkState();
+        checkGameState();
         if (state != Play)
             break;
-        updateDialogs();
+        updateDialog(gameScene->playerBoard, gameScene->playerShipsDialog, -1);
+        updateDialog(gameScene->enemyBoard, gameScene->enemyShipsDialog, 1);
         currentBoard = steps % 2 == 0 ? enemyBoard : playerBoard;
         wchar_t input;
         cursor->setBoard(currentBoard);
@@ -191,10 +168,19 @@ void Game::startGame()
     if (gameType == PlayerVSBot)
     {
         Bot* bot = new Bot(playerBoard);
+        enemyBoard->shipsVisable = false;
+        setupPlayerShips(cursor, playerBoard);
+        setupEnemyShips(enemyBoard);
         gameLoop(cursor, playerBoard, enemyBoard, bot);
     }
     else if (gameType == PlayerVSPlayer)
     {
+        setupPlayerShips(cursor, playerBoard);
+        playerBoard->shipsVisable = false;
+        playerBoard->update();
+        setupPlayerShips(cursor, enemyBoard);
+        enemyBoard->shipsVisable = false;
+        playerBoard->update();
         gameLoop(cursor, playerBoard, enemyBoard);
     }
 }

@@ -41,8 +41,8 @@ private:
     void setupPlayerShips(Cursor* cursor, Board* board);
     void setupEnemyShips(Board* enemyBoard);
     void gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot = nullptr);
-    void updateDialogs();
-    void checkState();
+    void updateDialog(Board* board, Dialog* dialog, short multiply);
+    void checkGameState();
     void rules();
 public:
     Game();
