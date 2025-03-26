@@ -133,9 +133,9 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
         wchar_t input;
         cursor->setBoard(currentBoard);
         input = cursor->readKeyboard();
+        cursor->checkCollision({1, 1});
         currentBoard->drawCell(cursor->position, Cell(Aim), UI);
         currentBoard->update();
-        cursor->checkCollision({1, 1});
         if (input == 10) {
             bool canShoot = currentBoard->canShoot(cursor->position);
             if(!canShoot)
