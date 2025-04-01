@@ -43,6 +43,9 @@ target_include_directories(battleship PRIVATE
 target_link_libraries(battleship PRIVATE
     ${CURSES_LIBRARIES}
 )
+if(WIN32)
+    target_compile_definitions(battleship PRIVATE -Dncurses_h=curses.h)
+endif()
 
 #-----------------------------------------------------------------------------
 # Resource Handling (img folder)
@@ -66,6 +69,7 @@ if(WIN32 AND EXISTS "${CURSES_LIBRARY}" AND CURSES_LIBRARY MATCHES "\\.dll$")
 endif()
 
 # Set output name and path
+
 set_target_properties(battleship PROPERTIES
     OUTPUT_NAME "battleship"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/apps"
