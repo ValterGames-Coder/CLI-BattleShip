@@ -36,7 +36,7 @@ target_include_directories(battleship PRIVATE
     ${CMAKE_SOURCE_DIR}/include/logic
     ${CMAKE_SOURCE_DIR}/include/scenes
     ${CMAKE_SOURCE_DIR}/include/ui
-    ${CURSES_INCLUDE_DIR}  # For curses.h
+    ${CURSES_INCLUDE_PATH}  # For curses.h
 )
 
 # Link libraries
@@ -56,12 +56,11 @@ add_custom_command(TARGET battleship POST_BUILD
 )
 
 # Windows-specific: Copy PDCurses DLL if needed
-if(WIN32 AND CURSES_LIBRARY MATCHES "\\.dll$")
-    get_filename_component(CURSES_DLL ${CURSES_LIBRARY} NAME)
+if(WIN32 AND EXISTS "${CURSES_LIBRARY}" AND CURSES_LIBRARY MATCHES "\\.dll$")
     add_custom_command(TARGET battleship POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
-            ${CURSES_LIBRARY}
-            $<TARGET_FILE_DIR:battleship>/${CURSES_DLL}
+            "${CURSES_LIBRARY}"
+            $<TARGET_FILE_DIR:battleship>/
         COMMENT "Copying PDCurses DLL to executable directory"
     )
 endif()
@@ -69,5 +68,5 @@ endif()
 # Set output name and path
 set_target_properties(battleship PROPERTIES
     OUTPUT_NAME "battleship"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/apps"
 )

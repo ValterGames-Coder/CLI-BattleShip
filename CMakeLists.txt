@@ -24,26 +24,44 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CURSES_NEED_WIDE TRUE)  # Required for waddnwstr support
 
 if(WIN32)
-    # Windows: Use PDCurses (vcpkg or manual)
-    find_package(Curses REQUIRED)
+    # Windows: First try vcpkg, then manual PDCurses
+    find_package(Curses QUIET)
     if(NOT CURSES_FOUND)
-        # Fallback: Manual PDCurses path (change if needed)
+        message(STATUS "PDCurses not found via vcpkg, trying manual path...")
         set(PDCURSES_ROOT "C:/libs/pdcurses" CACHE PATH "PDCurses root directory")
-        find_library(CURSES_LIBRARY
-            NAMES pdcurses curses
-            PATHS ${PDCURSES_ROOT}/lib
-            REQUIRED
-        )
         find_path(CURSES_INCLUDE_DIR
             NAMES curses.h
             PATHS ${PDCURSES_ROOT}/include
-            REQUIRED
+                  ${PDCURSES_ROOT}
+                  "C:/Program Files (x86)/PDCurses"
         )
-        set(CURSES_LIBRARIES ${CURSES_LIBRARY})
+        find_library(CURSES_LIBRARY
+            NAMES pdcurses curses
+            PATHS ${PDCURSES_ROOT}/lib
+                  ${PDCURSES_ROOT}
+                  "C:/Program Files (x86)/PDCurses"
+        )
+        
+        if(CURSES_INCLUDE_DIR AND CURSES_LIBRARY)
+            set(CURSES_FOUND TRUE)
+            set(CURSES_LIBRARIES ${CURSES_LIBRARY})
+            set(CURSES_INCLUDE_PATH ${CURSES_INCLUDE_DIR})
+            message(STATUS "Found PDCurses manually: ${CURSES_LIBRARY}")
+        else()
+            message(FATAL_ERROR "PDCurses not found!\n"
+                "Windows: Install via vcpkg:\n"
+                "  vcpkg install pdcurses:x64-windows\n"
+                "Or download PDCurses from https://pdcurses.org/ and set PDCURSES_ROOT")
+        endif()
     endif()
 else()
     # Linux/macOS: Use NCurses
     find_package(Curses REQUIRED)
+    if(NOT CURSES_FOUND)
+        message(FATAL_ERROR "NCurses not found! Install:\n"
+            "  Linux: sudo apt-get install libncursesw5-dev\n"
+            "  macOS: brew install ncurses")
+    endif()
 endif()
 
 #-----------------------------------------------------------------------------
