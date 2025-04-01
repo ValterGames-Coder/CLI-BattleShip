@@ -54,7 +54,7 @@ A terminal-based implementation of the classic Battleship game with C++ and NCur
    .\vcpkg integrate install
    ```
 
-3. Build the project:
+3. Build the project (use x64 Native Tools Command Promt for VS):
    ```powershell
    git clone https://github.com/ValterGames-Coder/CLI-BattleShip.git
    cd cli-battleship
