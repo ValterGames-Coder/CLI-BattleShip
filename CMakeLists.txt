@@ -18,9 +18,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-#-----------------------------------------------------------------------------
-# Curses/Ncurses Setup (Cross-Platform)
-#-----------------------------------------------------------------------------
+
 set(CURSES_NEED_WIDE TRUE)  # Required for waddnwstr support
 
 if(WIN32)
@@ -55,20 +53,16 @@ if(WIN32)
         endif()
     endif()
 else()
-    # Linux/macOS: Use NCurses
+    # Linux: Use NCurses
     find_package(Curses REQUIRED)
     if(NOT CURSES_FOUND)
         message(FATAL_ERROR "NCurses not found! Install:\n"
-            "  Linux: sudo apt-get install libncursesw5-dev\n"
-            "  macOS: brew install ncurses")
+            "  Linux: sudo apt-get install libncursesw5-dev\n")
     endif()
 endif()
 
-#-----------------------------------------------------------------------------
-# Project Structure
-#-----------------------------------------------------------------------------
+
 add_subdirectory(src)
 
-# Install rules (optional)
 install(TARGETS battleship DESTINATION bin)
 install(DIRECTORY img/ DESTINATION share/battleship/img)
