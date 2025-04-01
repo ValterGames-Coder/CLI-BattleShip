@@ -13,20 +13,44 @@ elseif(UNIX)
     add_definitions(-D_POSIX_C_SOURCE=200809L)
 endif()
 
-# Build output directory
+# Build output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# Find NCurses library - prefer wide-character version
-find_package(Curses REQUIRED)
-set(CURSES_NEED_WIDE TRUE)  # Request wide-character support
-include_directories(${CURSES_INCLUDE_DIRS})
+#-----------------------------------------------------------------------------
+# Curses/Ncurses Setup (Cross-Platform)
+#-----------------------------------------------------------------------------
+set(CURSES_NEED_WIDE TRUE)  # Required for waddnwstr support
 
-# Add subdirectories
+if(WIN32)
+    # Windows: Use PDCurses (vcpkg or manual)
+    find_package(Curses REQUIRED)
+    if(NOT CURSES_FOUND)
+        # Fallback: Manual PDCurses path (change if needed)
+        set(PDCURSES_ROOT "C:/libs/pdcurses" CACHE PATH "PDCurses root directory")
+        find_library(CURSES_LIBRARY
+            NAMES pdcurses curses
+            PATHS ${PDCURSES_ROOT}/lib
+            REQUIRED
+        )
+        find_path(CURSES_INCLUDE_DIR
+            NAMES curses.h
+            PATHS ${PDCURSES_ROOT}/include
+            REQUIRED
+        )
+        set(CURSES_LIBRARIES ${CURSES_LIBRARY})
+    endif()
+else()
+    # Linux/macOS: Use NCurses
+    find_package(Curses REQUIRED)
+endif()
+
+#-----------------------------------------------------------------------------
+# Project Structure
+#-----------------------------------------------------------------------------
 add_subdirectory(src)
 
+# Install rules (optional)
 install(TARGETS battleship DESTINATION bin)
-
-# Install the 'img' folder to a system directory (e.g., /usr/share/battleship/img)
 install(DIRECTORY img/ DESTINATION share/battleship/img)
