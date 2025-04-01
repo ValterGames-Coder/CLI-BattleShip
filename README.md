@@ -70,7 +70,7 @@ After building, run the executable:
 
 ```bash
 # Linux
-cd build/bin/
+cd bin/
 ./battleship
 
 # Windows
