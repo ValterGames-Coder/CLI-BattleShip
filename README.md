@@ -70,7 +70,8 @@ After building, run the executable:
 
 ```bash
 # Linux
-./build/battleship
+cd build/bin/
+.battleship
 
 # Windows
 .\build\bin\Release\battleship.exe
