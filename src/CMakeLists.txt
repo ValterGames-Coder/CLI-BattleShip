@@ -47,10 +47,7 @@ if(WIN32)
     target_compile_definitions(battleship PRIVATE -Dncurses_h=curses.h)
 endif()
 
-#-----------------------------------------------------------------------------
-# Resource Handling (img folder)
-#-----------------------------------------------------------------------------
-# Copy img folder to build directory (cross-platform)
+# Copy img folder
 add_custom_command(TARGET battleship POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/img
@@ -69,8 +66,7 @@ if(WIN32 AND EXISTS "${CURSES_LIBRARY}" AND CURSES_LIBRARY MATCHES "\\.dll$")
 endif()
 
 # Set output name and path
-
 set_target_properties(battleship PROPERTIES
     OUTPUT_NAME "battleship"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/apps"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
