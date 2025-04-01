@@ -74,7 +74,8 @@ cd bin/
 ./battleship
 
 # Windows
-.\build\bin\Release\battleship.exe
+cd \bin\Release
+battleship.exe
 ```
 
 ## License
