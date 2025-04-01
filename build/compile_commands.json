@@ -1,0 +1,82 @@
+[
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/battleship.cpp.o -c /home/altair/CLI-BattleShip/src/battleship.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/battleship.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/game.cpp.o -c /home/altair/CLI-BattleShip/src/game.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/game.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/base/ascii.cpp.o -c /home/altair/CLI-BattleShip/src/base/ascii.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/base/ascii.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/animation/animator.cpp.o -c /home/altair/CLI-BattleShip/src/animation/animator.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/animation/animator.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/logic/board.cpp.o -c /home/altair/CLI-BattleShip/src/logic/board.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/logic/board.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/logic/bot.cpp.o -c /home/altair/CLI-BattleShip/src/logic/bot.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/logic/bot.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/logic/cursor.cpp.o -c /home/altair/CLI-BattleShip/src/logic/cursor.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/logic/cursor.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/logic/ship.cpp.o -c /home/altair/CLI-BattleShip/src/logic/ship.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/logic/ship.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/logic/ship_builder.cpp.o -c /home/altair/CLI-BattleShip/src/logic/ship_builder.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/logic/ship_builder.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/logic/shooter.cpp.o -c /home/altair/CLI-BattleShip/src/logic/shooter.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/logic/shooter.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/scenes/game_scene.cpp.o -c /home/altair/CLI-BattleShip/src/scenes/game_scene.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/scenes/game_scene.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/scenes/main_menu_scene.cpp.o -c /home/altair/CLI-BattleShip/src/scenes/main_menu_scene.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/scenes/main_menu_scene.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/scenes/rules_scene.cpp.o -c /home/altair/CLI-BattleShip/src/scenes/rules_scene.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/scenes/rules_scene.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/scenes/scene.cpp.o -c /home/altair/CLI-BattleShip/src/scenes/scene.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/scenes/scene.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/ui/dialog.cpp.o -c /home/altair/CLI-BattleShip/src/ui/dialog.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/ui/dialog.cpp"
+},
+{
+  "directory": "/home/altair/CLI-BattleShip/build/src",
+  "command": "/usr/bin/g++ -D_POSIX_C_SOURCE=200809L -I/home/altair/CLI-BattleShip/include -I/home/altair/CLI-BattleShip/include/animation -I/home/altair/CLI-BattleShip/include/base -I/home/altair/CLI-BattleShip/include/logic -I/home/altair/CLI-BattleShip/include/scenes -I/home/altair/CLI-BattleShip/include/ui -g -std=gnu++17 -o CMakeFiles/battleship.dir/ui/panel.cpp.o -c /home/altair/CLI-BattleShip/src/ui/panel.cpp",
+  "file": "/home/altair/CLI-BattleShip/src/ui/panel.cpp"
+}
+]

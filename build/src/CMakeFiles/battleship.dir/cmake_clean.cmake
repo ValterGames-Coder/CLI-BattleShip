@@ -1,0 +1,41 @@
+file(REMOVE_RECURSE
+  "../bin/battleship"
+  "../bin/battleship.pdb"
+  "CMakeFiles/battleship.dir/animation/animator.cpp.o"
+  "CMakeFiles/battleship.dir/animation/animator.cpp.o.d"
+  "CMakeFiles/battleship.dir/base/ascii.cpp.o"
+  "CMakeFiles/battleship.dir/base/ascii.cpp.o.d"
+  "CMakeFiles/battleship.dir/battleship.cpp.o"
+  "CMakeFiles/battleship.dir/battleship.cpp.o.d"
+  "CMakeFiles/battleship.dir/game.cpp.o"
+  "CMakeFiles/battleship.dir/game.cpp.o.d"
+  "CMakeFiles/battleship.dir/logic/board.cpp.o"
+  "CMakeFiles/battleship.dir/logic/board.cpp.o.d"
+  "CMakeFiles/battleship.dir/logic/bot.cpp.o"
+  "CMakeFiles/battleship.dir/logic/bot.cpp.o.d"
+  "CMakeFiles/battleship.dir/logic/cursor.cpp.o"
+  "CMakeFiles/battleship.dir/logic/cursor.cpp.o.d"
+  "CMakeFiles/battleship.dir/logic/ship.cpp.o"
+  "CMakeFiles/battleship.dir/logic/ship.cpp.o.d"
+  "CMakeFiles/battleship.dir/logic/ship_builder.cpp.o"
+  "CMakeFiles/battleship.dir/logic/ship_builder.cpp.o.d"
+  "CMakeFiles/battleship.dir/logic/shooter.cpp.o"
+  "CMakeFiles/battleship.dir/logic/shooter.cpp.o.d"
+  "CMakeFiles/battleship.dir/scenes/game_scene.cpp.o"
+  "CMakeFiles/battleship.dir/scenes/game_scene.cpp.o.d"
+  "CMakeFiles/battleship.dir/scenes/main_menu_scene.cpp.o"
+  "CMakeFiles/battleship.dir/scenes/main_menu_scene.cpp.o.d"
+  "CMakeFiles/battleship.dir/scenes/rules_scene.cpp.o"
+  "CMakeFiles/battleship.dir/scenes/rules_scene.cpp.o.d"
+  "CMakeFiles/battleship.dir/scenes/scene.cpp.o"
+  "CMakeFiles/battleship.dir/scenes/scene.cpp.o.d"
+  "CMakeFiles/battleship.dir/ui/dialog.cpp.o"
+  "CMakeFiles/battleship.dir/ui/dialog.cpp.o.d"
+  "CMakeFiles/battleship.dir/ui/panel.cpp.o"
+  "CMakeFiles/battleship.dir/ui/panel.cpp.o.d"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/battleship.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
