@@ -61,7 +61,7 @@ A terminal-based implementation of the classic Battleship game with C++ and NCur
    mkdir build
    cd build
    cmake -DCMAKE_TOOLCHAIN_FILE="C:\vcpkg\scripts\buildsystems\vcpkg.cmake" ..
-   cmake --build . --config Bin
+   cmake --build . --config Release
    ```
 
 ## Running the Game
@@ -73,7 +73,7 @@ After building, run the executable:
 ./build/battleship
 
 # Windows
-.\build\Bin\battleship.exe
+.\build\bin\Release\battleship.exe
 ```
 
 ## License
