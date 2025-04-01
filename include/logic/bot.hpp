@@ -1,5 +1,7 @@
 #pragma once
 #include "logic/board.hpp"
+#include <cstdlib>
+#include <ctime>
 
 enum BotState
 {

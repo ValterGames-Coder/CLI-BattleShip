@@ -24,7 +24,13 @@ void Dialog::updateDialog(std::wstring text)
         dialogWin = newwin(3, text.length() + 4, dialogPosition.y, dialogPosition.x - (text.length() / 2) - 1);
     box(dialogWin, 0, 0);
     wmove(dialogWin, 1, 2);
+#if defined(_WIN32)
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+    std::string winTxt = converter.to_bytes(text);
+    waddnstr(dialogWin, winTxt.c_str(), winTxt.size());
+#else
     waddwstr(dialogWin, text.c_str());
+#endif
     wrefresh(dialogWin);
     currentText = text;
 }

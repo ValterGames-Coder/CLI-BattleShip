@@ -1,4 +1,5 @@
 #pragma once
+#include <codecvt>
 #include <ncurses.h>
 #include <string>
 #include "base/position.hpp"
