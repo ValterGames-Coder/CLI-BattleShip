@@ -33,7 +33,7 @@ A terminal-based implementation of the classic Battleship game with C++ and NCur
 2. Clone and build:
    ```bash
    git clone https://github.com/ValterGames-Coder/CLI-BattleShip.git
-   cd cli-battleship
+   cd CLI-BattleShip
    mkdir build && cd build
    cmake ..
    make
@@ -57,7 +57,7 @@ A terminal-based implementation of the classic Battleship game with C++ and NCur
 3. Build the project (use x64 Native Tools Command Promt for VS):
    ```powershell
    git clone https://github.com/ValterGames-Coder/CLI-BattleShip.git
-   cd cli-battleship
+   cd CLI-BattleShip
    mkdir build
    cd build
    cmake -DCMAKE_TOOLCHAIN_FILE="C:\vcpkg\scripts\buildsystems\vcpkg.cmake" ..
