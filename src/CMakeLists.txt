@@ -51,6 +51,26 @@ if(UNIX AND NOT APPLE)
     endif()
 endif()
 
+if(WIN32)
+    # Manually specify PDCurses paths (if not using vcpkg)
+    set(PDCURSES_ROOT "C:/libs/pdcurses")  # Change to your path
+    find_library(CURSES_LIBRARY
+        NAMES pdcurses curses
+        PATHS ${PDCURSES_ROOT}/lib
+    )
+    find_path(CURSES_INCLUDE_DIR
+        NAMES curses.h
+        PATHS ${PDCURSES_ROOT}/include
+    )
+
+    if(CURSES_LIBRARY AND CURSES_INCLUDE_DIR)
+        target_include_directories(battleship PRIVATE ${CURSES_INCLUDE_DIR})
+        target_link_libraries(battleship PRIVATE ${CURSES_LIBRARY})
+    else()
+        message(FATAL_ERROR "PDCurses not found! Install it or set PDCURSES_ROOT.")
+    endif()
+endif()
+
 # For Windows, add the PDCurses import library if needed
 if(WIN32)
     target_link_libraries(battleship PRIVATE pdcurses)
