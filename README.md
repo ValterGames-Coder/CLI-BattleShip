@@ -9,7 +9,7 @@ A terminal-based implementation of the classic Battleship game with C++ and NCur
 - Classic Battleship gameplay
 - Cross-platform support (Windows/Linux)
 - Terminal-based UI with color support
-- Single-player vs AI mode
+- PvE and PvP mode
 
 ## Prerequisites
 
