@@ -71,7 +71,7 @@ After building, run the executable:
 ```bash
 # Linux
 cd build/bin/
-.battleship
+./battleship
 
 # Windows
 .\build\bin\Release\battleship.exe
