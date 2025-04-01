@@ -1,6 +1,6 @@
 # CLI-Battleship
 
-![Battleship Game Screenshot](screenshot.png)
+![Battleship Game Screenshot](battleship.png)
 
 A terminal-based implementation of the classic Battleship game with C++ and NCurses/PDCurses.
 
