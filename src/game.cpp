@@ -1,9 +1,4 @@
-#include <algorithm>
 #include "game.hpp"
-#include "scenes/scene.cpp"
-#include "logic/cursor.hpp"
-#include "logic/ship_builder.hpp"
-#include "logic/shooter.hpp"
 
 Game::Game()
 {
@@ -15,7 +10,7 @@ Game::Game()
 void Game::updateDialog(Board* board, Dialog* dialog, short multiply)
 {
     unsigned short numberOfShips = std::count_if(
-        board->ships.begin(), 
+        board->ships.begin(),
         board->ships.end(),
         [&](Ship* ship) { return ship->isDestroyed == false; });
     wchar_t shipsDialogText[20];
@@ -36,10 +31,10 @@ void Game::updateDialog(Board* board, Dialog* dialog, short multiply)
 void Game::setupPlayerShips(Cursor* cursor, Board* board)
 {
     wchar_t input;
-    for(auto size : playerShips)
+    for (auto size : playerShips)
     {
         Ship* ship = new Ship(size, board);
-        cursor->move({0, 0});
+        cursor->move({ 0, 0 });
         do
         {
             input = cursor->readKeyboard();
@@ -56,7 +51,7 @@ void Game::setupPlayerShips(Cursor* cursor, Board* board)
 
 void Game::setupEnemyShips(Board* enemyBoard)
 {
-    for(auto size : enemyShips)
+    for (auto size : enemyShips)
     {
         Ship* ship = new Ship(size, enemyBoard);
         bool canShipAdd;
@@ -75,7 +70,7 @@ void Game::setupEnemyShips(Board* enemyBoard)
 void Game::checkGameState()
 {
     unsigned short enemyNumberOfShips = std::count_if(
-        gameScene->enemyBoard->ships.begin(), 
+        gameScene->enemyBoard->ships.begin(),
         gameScene->enemyBoard->ships.end(),
         [&](Ship* ship) { return ship->isDestroyed == false; });
     if (enemyNumberOfShips == 0)
@@ -94,7 +89,7 @@ void Game::checkGameState()
         }
     }
     unsigned short playerNumberOfShips = std::count_if(
-        gameScene->playerBoard->ships.begin(), 
+        gameScene->playerBoard->ships.begin(),
         gameScene->playerBoard->ships.end(),
         [&](Ship* ship) { return ship->isDestroyed == false; });
     if (playerNumberOfShips == 0)
@@ -117,7 +112,7 @@ void Game::checkGameState()
 void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot)
 {
     state = Play;
-    cursor->move({0, 0});
+    cursor->move({ 0, 0 });
     enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
     enemyBoard->update();
     int steps = 0;
@@ -133,12 +128,12 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
         wchar_t input;
         cursor->setBoard(currentBoard);
         input = cursor->readKeyboard();
-        cursor->checkCollision({1, 1});
+        cursor->checkCollision({ 1, 1 });
         currentBoard->drawCell(cursor->position, Cell(Aim), UI);
         currentBoard->update();
         if (input == 10) {
             bool canShoot = currentBoard->canShoot(cursor->position);
-            if(!canShoot)
+            if (!canShoot)
                 continue;
             CellType type = shoot(cursor->position, currentBoard);
             if (type == Hit)
@@ -184,7 +179,7 @@ void Game::startGame()
         gameLoop(cursor, playerBoard, enemyBoard);
     }
 }
-    
+
 
 void Game::rules()
 {
@@ -201,7 +196,7 @@ void Game::run()
     mainMenuScene = new MainMenuScene();
     mainMenuScene->load();
     std::string input = mainMenuScene->getInput();
-    
+
     if (input == "Player vs Player")
     {
         gameType = PlayerVSPlayer;

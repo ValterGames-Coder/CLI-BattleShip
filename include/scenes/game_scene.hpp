@@ -14,8 +14,8 @@ public:
     void load() override;
     void endMenu(const char* img, unsigned short color);
 
-    Board* playerBoard;
-    Board* enemyBoard;
+    Board* playerBoard = nullptr;
+    Board* enemyBoard = nullptr;
     Dialog* playerShipsDialog = nullptr;
     Dialog* enemyShipsDialog = nullptr;
 };
