@@ -31,7 +31,7 @@ private:
 public:
     std::vector<Ship*> ships;
     std::vector<Position> getCells(CellType type);
-    bool shipsVisable = true;
+    bool shipsVisible = true;
     short checkBorder(short pos, short size);
     short clamp(short point, short min, short max);
     bool canShoot(Position position);

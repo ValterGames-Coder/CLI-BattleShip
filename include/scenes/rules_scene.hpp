@@ -4,5 +4,6 @@
 class RulesScene : public Scene
 {
 public:
+    RulesScene();
     void load() override;
 };

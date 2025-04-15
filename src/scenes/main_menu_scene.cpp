@@ -3,6 +3,8 @@
 
 bool MainMenuScene::intro = false;
 
+MainMenuScene::MainMenuScene(): Scene() { load(); }
+
 void MainMenuScene::load()
 {
     curs_set(0);
@@ -20,7 +22,6 @@ void MainMenuScene::load()
     else
         printImage(sceneWin, endShipPosition - Position(1, 0), "./img/ship.txt", COLOR_CYAN);
     printImage(sceneWin, logoPosition, "./img/logo.txt", COLOR_CYAN);
-    //printf("Ship count here is %i and %i df-!d,{}{SScf}sdouty");
     Position panelPosition {(short)(yMax / 2 + (logoSize.y + shipSize.y) / 2), (short)((xMax / 2) - 2)};
     Panel* panel = new Panel(panelPosition, options);
     selected = panel->getSelectedItem();

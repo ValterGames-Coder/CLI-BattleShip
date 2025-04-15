@@ -156,14 +156,13 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
 void Game::startGame()
 {
     gameScene = new GameScene();
-    gameScene->load();
     Board* enemyBoard = gameScene->enemyBoard;
     Board* playerBoard = gameScene->playerBoard;
     Cursor* cursor = new Cursor(playerBoard);
     if (gameType == PlayerVSBot)
     {
         Bot* bot = new Bot(playerBoard);
-        enemyBoard->shipsVisable = false;
+        enemyBoard->shipsVisible = false;
         setupPlayerShips(cursor, playerBoard);
         setupEnemyShips(enemyBoard);
         gameLoop(cursor, playerBoard, enemyBoard, bot);
@@ -171,10 +170,10 @@ void Game::startGame()
     else if (gameType == PlayerVSPlayer)
     {
         setupPlayerShips(cursor, playerBoard);
-        playerBoard->shipsVisable = false;
+        playerBoard->shipsVisible = false;
         playerBoard->update();
         setupPlayerShips(cursor, enemyBoard);
-        enemyBoard->shipsVisable = false;
+        enemyBoard->shipsVisible = false;
         playerBoard->update();
         gameLoop(cursor, playerBoard, enemyBoard);
     }
@@ -184,7 +183,6 @@ void Game::startGame()
 void Game::rules()
 {
     rulesScene = new RulesScene();
-    rulesScene->load();
     run();
 }
 
@@ -194,7 +192,6 @@ void Game::run()
         return;
 
     mainMenuScene = new MainMenuScene();
-    mainMenuScene->load();
     std::string input = mainMenuScene->getInput();
 
     if (input == "Player vs Player")

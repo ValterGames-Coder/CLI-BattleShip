@@ -11,6 +11,7 @@
 class GameScene : public Scene
 {
 public:
+    GameScene();
     void load() override;
     void endMenu(const char* img, unsigned short color);
 

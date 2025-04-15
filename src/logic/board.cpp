@@ -94,7 +94,7 @@ void Board::update()
             else
                 layer = Water;
             cell = getLayer(layer)[{y, x}];
-            if (layer == Ships && !shipsVisable && cell.type == Undamaged)
+            if (layer == Ships && !shipsVisible && cell.type == Undamaged)
                 cell = Cell(Empty);
             int color = cell.color;
             if (layer == UI && cell.type == Undamaged)

@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
-#include "scenes/scene.cpp"
+#include "scenes/scene.hpp"
 #include "logic/cursor.hpp"
 #include "logic/ship_builder.hpp"
 #include "logic/shooter.hpp"

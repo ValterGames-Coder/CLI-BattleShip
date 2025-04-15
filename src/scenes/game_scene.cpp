@@ -1,6 +1,8 @@
 #include "scenes/game_scene.hpp"
 #include "base/ascii.hpp"
 
+GameScene::GameScene(): Scene() { load(); }
+
 void GameScene::load()
 {
     curs_set(0);

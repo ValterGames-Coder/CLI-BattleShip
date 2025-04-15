@@ -13,6 +13,7 @@ private:
     unsigned short selected = 0;
     std::vector<std::string> options {"Player vs Player", "Player vs Bot", "Rules", "Exit"};
 public:
+    MainMenuScene();
     void load() override;
     std::string getInput();
 };

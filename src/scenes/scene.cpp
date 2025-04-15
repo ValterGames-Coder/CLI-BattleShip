@@ -8,5 +8,3 @@ Scene::Scene()
     refresh();
     wrefresh(sceneWin);
 }
-
-void Scene::load() { }

@@ -7,6 +7,6 @@ protected:
     unsigned short xMax, yMax;
     WINDOW* sceneWin;
 public:
-    inline Scene();
-    virtual inline void load();
+    Scene();
+    virtual void load() = 0;
 };

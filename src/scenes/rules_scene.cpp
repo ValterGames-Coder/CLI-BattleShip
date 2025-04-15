@@ -1,6 +1,8 @@
 #include "scenes/rules_scene.hpp"
 #include "base/ascii.hpp"
 
+RulesScene::RulesScene(): Scene() { load(); }
+
 void RulesScene::load()
 {
     curs_set(0);
