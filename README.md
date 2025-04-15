@@ -9,7 +9,7 @@ A terminal-based implementation of the classic Battleship game with C++ and NCur
 - Classic Battleship gameplay
 - Cross-platform support (Windows/Linux)
 - Terminal-based UI with color support
-- Single-player vs AI mode
+- PvE and PvP mode
 
 ## Prerequisites
 
@@ -70,11 +70,12 @@ After building, run the executable:
 
 ```bash
 # Linux
-cd build/bin/
+cd bin/
 ./battleship
 
 # Windows
-.\build\bin\Release\battleship.exe
+cd \bin\Release
+battleship.exe
 ```
 
 ## License
