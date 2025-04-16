@@ -1,9 +1,5 @@
 #include "game.hpp"
 
-/**
- * @brief Construct a new Game::Game object
- * 
- */
 Game::Game()
 {
     srand(time(NULL));

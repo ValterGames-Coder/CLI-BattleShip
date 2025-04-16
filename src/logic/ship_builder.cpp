@@ -46,6 +46,7 @@ bool addShip(Board* board, Ship* ship, Position shipPosition)
 void deleteShip(Board* board, Position position)
 {
     Ship* ship = board->getShip(position);
+    if (!ship)
+        return;
     board->drawMap(ship->cursorPosition, ship->locked, Water);
-    //board->ships.erase(board->ships.begin() + index);
 }
