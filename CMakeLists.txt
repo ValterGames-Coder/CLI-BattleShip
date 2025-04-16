@@ -18,12 +18,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-
+#-----------------------------------------------------------------------------
+# Curses/Ncurses Setup (Cross-Platform)
+#-----------------------------------------------------------------------------
 set(CURSES_NEED_WIDE TRUE)  # Required for waddnwstr support
 
 if(WIN32)
     # Windows: First try vcpkg, then manual PDCurses
-    find_package(Curses QUIET)
+        
     if(NOT CURSES_FOUND)
         message(STATUS "PDCurses not found via vcpkg, trying manual path...")
         set(PDCURSES_ROOT "C:/libs/pdcurses" CACHE PATH "PDCurses root directory")
@@ -53,16 +55,20 @@ if(WIN32)
         endif()
     endif()
 else()
-    # Linux: Use NCurses
+    # Linux/macOS: Use NCurses
     find_package(Curses REQUIRED)
     if(NOT CURSES_FOUND)
         message(FATAL_ERROR "NCurses not found! Install:\n"
-            "  Linux: sudo apt-get install libncursesw5-dev\n")
+            "  Linux: sudo apt-get install libncursesw5-dev\n"
+            "  macOS: brew install ncurses")
     endif()
 endif()
 
-
+#-----------------------------------------------------------------------------
+# Project Structure
+#-----------------------------------------------------------------------------
 add_subdirectory(src)
 
+# Install rules (optional)
 install(TARGETS battleship DESTINATION bin)
 install(DIRECTORY img/ DESTINATION share/battleship/img)
