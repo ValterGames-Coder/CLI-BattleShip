@@ -26,7 +26,7 @@
 // }
 
 TEST_CASE("Попытка удалить несуществующий корабль", "[addShip, deleteShip]")
-{
+{   
     Board* board = new Board(Position(0, 0));
     Position shipPosition(0, 0);
     deleteShip(board, shipPosition);

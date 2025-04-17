@@ -69,10 +69,8 @@ void Game::setupEnemyShips(Board* enemyBoard)
 
 void Game::checkGameState()
 {
-    unsigned short enemyNumberOfShips = std::count_if(
-        gameScene->enemyBoard->ships.begin(),
-        gameScene->enemyBoard->ships.end(),
-        [&](Ship* ship) { return ship->isDestroyed == false; });
+    unsigned short enemyNumberOfShips = 
+        gameScene->enemyBoard->ships.size();
     if (enemyNumberOfShips == 0)
     {
         if (gameType == PlayerVSBot)
@@ -88,10 +86,8 @@ void Game::checkGameState()
             return;
         }
     }
-    unsigned short playerNumberOfShips = std::count_if(
-        gameScene->playerBoard->ships.begin(),
-        gameScene->playerBoard->ships.end(),
-        [&](Ship* ship) { return ship->isDestroyed == false; });
+    unsigned short playerNumberOfShips =
+        gameScene->playerBoard->ships.size();
     if (playerNumberOfShips == 0)
     {
         if (gameType == PlayerVSBot)

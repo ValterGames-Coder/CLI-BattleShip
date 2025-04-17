@@ -2,6 +2,9 @@
 
 bool addShip(Board* board, Ship* ship, Position shipPosition)
 {
+    if (shipPosition > Position(BOARD_SIZE, BOARD_SIZE) || shipPosition < Position(0, 0))
+        return false;
+
     for (short y = 0; y < ship->getSize().first; y++)
         for (short x = 0; x < ship->getSize().second; x++)
             if(!board->canAddShip(Position(y, x) + shipPosition))
@@ -49,4 +52,7 @@ void deleteShip(Board* board, Position position)
     if (!ship)
         return;
     board->drawMap(ship->cursorPosition, ship->locked, Water);
+    auto it = std::find(board->ships.begin(), board->ships.end(), ship);
+        if (it != board->ships.end())
+            board->ships.erase(it);
 }
