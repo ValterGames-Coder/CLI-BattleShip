@@ -9,22 +9,19 @@ Game::Game()
 
 void Game::updateDialog(Board* board, Dialog* dialog, short multiply)
 {
-    unsigned short numberOfShips = std::count_if(
-        board->ships.begin(),
-        board->ships.end(),
-        [&](Ship* ship) { return ship->isDestroyed == false; });
-    wchar_t shipsDialogText[20];
-    std::swprintf(shipsDialogText, sizeof(shipsDialogText) / sizeof(wchar_t), L"Ships: %i", numberOfShips);
+    unsigned short numberOfShips = board->ships.size();
+    std::wstring text = L"Ships: ";
+    text += std::to_wstring(numberOfShips);
     if (dialog == nullptr)
     {
         dialog = new Dialog(Position(
             (yMax / 2) + BOARD_SPACE_Y * 1.5,
             (xMax / 2) + BOARD_SPACE_X * multiply
-        ), shipsDialogText, true, 18);
+        ), text, true, 18);
     }
     else
     {
-        dialog->updateDialog(shipsDialogText);
+        dialog->updateDialog(text);
     }
 }
 
