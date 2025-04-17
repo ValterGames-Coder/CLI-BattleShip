@@ -7,9 +7,6 @@ void initNcurses()
 	cbreak();
 	refresh();
 	noecho();
-#if defined(_WIN23)
-	noraw()
-#endif
 	setlocale(LC_ALL,"");
 }
 
