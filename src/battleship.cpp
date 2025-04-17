@@ -7,21 +7,14 @@ void initNcurses()
 	cbreak();
 	refresh();
 	noecho();
+#if defined(_WIN23)
+	noraw()
+#endif
 	setlocale(LC_ALL,"");
 }
 
-int main()
+void initPair()
 {
-    initNcurses();
-    if(!has_colors())
-	{
-		endwin();
-		printf("Your terminal does not support color\n");
-		return -1;
-	}
-	start_color();
-	use_default_colors();
-
 	init_pair(0, COLOR_BLACK, -1);
 #if defined(_WIN32)
 	init_pair(1, COLOR_BLUE, -1);
@@ -37,7 +30,21 @@ int main()
 	init_pair(2, COLOR_GREEN, -1);
 	init_pair(5, COLOR_MAGENTA, -1); 
     init_pair(7, COLOR_WHITE, -1);
+}
 
+int main()
+{
+    initNcurses();
+    if(!has_colors())
+	{
+		endwin();
+		printf("Your terminal does not support color\n");
+		return -1;
+	}
+	start_color();
+	use_default_colors();
+	initPair();
+	
     Game game;
     game.run();
 
