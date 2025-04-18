@@ -31,22 +31,22 @@ enum GameType
 class Game
 {
 private:
-    bool _isInit = false;
-    unsigned short _yMax, _xMax;
-    MainMenuScene* _mainMenuScene = nullptr;
-    GameScene* _gameScene = nullptr;
-    RulesScene* _rulesScene = nullptr;
-    GameState _state = Setup;
-    GameType _gameType = PlayerVSBot;
+    bool m_isInit = false;
+    unsigned short m_yMax, m_xMax;
+    MainMenuScene* m_mainMenuScene = nullptr;
+    GameScene* m_gameScene = nullptr;
+    RulesScene* m_rulesScene = nullptr;
+    GameState m_state;
+    GameType m_gameType;
 
-    unsigned short _playerShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
-    unsigned short _enemyShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
+    unsigned short m_playerShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
+    unsigned short m_enemyShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
 
     void startGame();
     void setupPlayerShips(Cursor* cursor, Board* board);
     void setupEnemyShips(Board* enemyBoard);
     void gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot = nullptr);
-    void updateDialog(Board* board, Dialog* dialog, short multiply);
+    void updateDialog(Board* board, Dialog* dialog, int multiply);
     void checkGameState();
     void rules();
 public:

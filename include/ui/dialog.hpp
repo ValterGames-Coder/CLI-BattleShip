@@ -7,12 +7,12 @@
 class Dialog
 {
 private:
-    WINDOW* dialogWin = nullptr;
-    Position dialogPosition;
+    WINDOW* m_dialogWin = nullptr;
+    Position m_dialogPosition;
 public:
-    Dialog(Position dialogPosition, std::wstring text, bool staticSize, unsigned short size);
+    Dialog(Position dialogPosition, std::wstring text, bool staticSize, unsigned size);
     void updateDialog(std::wstring text);
     std::wstring currentText;
     bool staticSize;
-    unsigned short size;
+    unsigned size;
 };

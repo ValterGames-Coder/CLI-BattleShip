@@ -4,7 +4,7 @@ Position getSize(const char* fileName)
 {
     std::wifstream file;
     std::wstring line;
-    short widht = 0, height = 0;
+    int widht = 0, height = 0;
     file.open(fileName);
     if (!file.is_open())
         return {-1, -1};
@@ -12,7 +12,7 @@ Position getSize(const char* fileName)
     while (getline(file, line))
     {
         height++;
-        if (widht < (short)line.size())
+        if (widht < line.size())
             widht = line.size();
     }
     return {height, widht};
@@ -35,7 +35,6 @@ void printImage(WINDOW* win, Position position, const char* fileName, unsigned c
 
     while (getline(file, line))
     {
-        //mvwprintw(win, position.y + i, position.x - (line.length() / 2), "%ls", line.c_str());
         mvwprintw(win, position.y + i, position.x, "%ls", line.c_str());
         wrefresh(win);
         i++;

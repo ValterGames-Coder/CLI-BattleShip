@@ -2,7 +2,7 @@
 
 namespace Animation
 {
-    void move(WINDOW* win, Position startPosition, Position endPosition, const char* file, double seconds, unsigned short color)
+    void move(WINDOW* win, Position startPosition, Position endPosition, const char* file, double seconds, unsigned color)
     {
         Position currentPosition;
         double t = 0;

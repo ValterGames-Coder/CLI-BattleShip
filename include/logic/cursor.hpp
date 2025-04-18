@@ -6,13 +6,13 @@
 class Cursor
 {
 private:
-    Board* board;
-    WINDOW* boardWin;
+    Board* m_board;
+    WINDOW* m_boardWin;
 public:
     Position position {0, 0};
     Cursor(Board* board);
     void move(Position newPosition);
     void setBoard(Board* board);
     wchar_t readKeyboard();
-    void checkCollision(std::pair<unsigned short, unsigned short> size);
+    void checkCollision(std::pair<unsigned, unsigned> size);
 };

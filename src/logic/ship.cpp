@@ -11,8 +11,8 @@ Ship::Ship(unsigned lenght, Board* board)
 
 void Ship::draw(Position position)
 {
-    for (unsigned short y = 0; y < m_size.first; y++)
-        for (unsigned short x = 0; x < m_size.second; x++)
+    for (int y = 0; y < m_size.first; y++)
+        for (int x = 0; x < m_size.second; x++)
         m_gameBoard->drawCell(position + Position(y, x), Cell(Undamaged), UI);
     m_gameBoard->update();
 }

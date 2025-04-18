@@ -13,7 +13,7 @@ class GameScene : public Scene
 public:
     GameScene();
     void load() override;
-    void endMenu(const char* img, unsigned short color);
+    void endMenu(const char* img, unsigned color);
 
     Board* playerBoard = nullptr;
     Board* enemyBoard = nullptr;

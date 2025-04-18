@@ -13,19 +13,19 @@ enum BotState
 class Bot
 {
 private:
-    Board* playerBoard;
-    BotState botState;
-    unsigned short shootDirection = 0;
-    std::vector<Position> shootDirections = 
+    Board* m_playerBoard;
+    BotState m_botState;
+    unsigned m_shootDirection = 0;
+    std::vector<Position> m_shootDirections = 
     {
         Position(0, 1),
         Position(1, 0),
         Position(0, -1),
         Position(-1, 0)
     };
-    Position currentCursorPosition;
-    Position shipPosition;
-    Ship* currentShip = nullptr;
+    Position m_currentCursorPosition;
+    Position m_shipPosition;
+    Ship* m_currentShip = nullptr;
     void randomShoot();
     void findDirection();
     void fishiningOff();

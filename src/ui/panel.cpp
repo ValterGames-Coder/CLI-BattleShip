@@ -3,33 +3,33 @@
 
 Panel::Panel(Position position, std::vector<std::string> options)
 {
-    this->options = options;
-    optionsSize = (short)this->options.size();
+    m_options = options;
+    m_optionsSize = m_options.size();
     std::string max_element = "";
-    for (auto& option : options)
+    for (auto& option : m_options)
         if (option.length() > max_element.length())
             max_element = option;
-    panelMenu = newwin(optionsSize + 2, max_element.size() + 2, position.y, position.x - max_element.length() / 2);
-    box(panelMenu, 0, 0);
+    m_panelMenu = newwin(m_optionsSize + 2, max_element.size() + 2, position.y, position.x - max_element.length() / 2);
+    box(m_panelMenu, 0, 0);
     refresh();
-    wrefresh(panelMenu);
+    wrefresh(m_panelMenu);
 }
 
-unsigned short Panel::getSelectedItem()
+unsigned Panel::getSelectedItem()
 {
-    keypad(panelMenu, true);
+    keypad(m_panelMenu, true);
     wchar_t input;
-    short select = 0;
+    unsigned select = 0;
     while (1)
     {
-        for (unsigned short i = 0; i < optionsSize; i++)
+        for (int i = 0; i < m_optionsSize; i++)
         {
             if (i == select)
-                wattron(panelMenu, A_REVERSE);
-            mvwprintw(panelMenu, i+1, 1, "%s",this->options[i].c_str());
-            wattroff(panelMenu, A_REVERSE);
+                wattron(m_panelMenu, A_REVERSE);
+            mvwprintw(m_panelMenu, i+1, 1, "%s", m_options[i].c_str());
+            wattroff(m_panelMenu, A_REVERSE);
         }
-        input = wgetch(panelMenu);
+        input = wgetch(m_panelMenu);
 
         switch (input)
         {
@@ -40,8 +40,8 @@ unsigned short Panel::getSelectedItem()
             break;
         case KEY_DOWN:
             select++;
-            if (select == optionsSize)
-                select = optionsSize - 1;
+            if (select == m_optionsSize)
+                select = m_optionsSize - 1;
         default:
             break;
         }
@@ -49,6 +49,6 @@ unsigned short Panel::getSelectedItem()
         if (input == 10) 
             break;
     }
-    keypad(panelMenu, false);
+    keypad(m_panelMenu, false);
     return select;
 }

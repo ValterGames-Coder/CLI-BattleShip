@@ -2,9 +2,9 @@
 
 struct Position
 {
-    Position(short y = 0, short x = 0) : y(y), x(x) {}
+    Position(int y = 0, int x = 0) : y(y), x(x) {}
 
-    short y, x;
+    int y, x;
 
     friend inline bool operator==(const Position& pos1, const Position& pos2) {
         return pos1.y == pos2.y && pos1.x == pos2.x;

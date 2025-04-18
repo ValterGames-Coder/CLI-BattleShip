@@ -4,8 +4,8 @@
 Bot::Bot(Board* playerBoard)
 {
     srand(time(NULL));
-    botState = RandomShoot;
-    this->playerBoard = playerBoard;
+    m_botState = RandomShoot;
+    m_playerBoard = playerBoard;
 }
 
 void Bot::randomShoot()
@@ -13,77 +13,77 @@ void Bot::randomShoot()
     bool canShoot;
     do
     {
-        currentCursorPosition = Position(rand() % BOARD_SIZE, rand() % BOARD_SIZE);
-        canShoot = playerBoard->canShoot(currentCursorPosition);
+        m_currentCursorPosition = Position(rand() % BOARD_SIZE, rand() % BOARD_SIZE);
+        canShoot = m_playerBoard->canShoot(m_currentCursorPosition);
     } while (canShoot == false);
-    CellType shootInfo = shoot(currentCursorPosition, playerBoard);
+    CellType shootInfo = shoot(m_currentCursorPosition, m_playerBoard);
     if (shootInfo == Missed)
         return;
 
-    currentShip = playerBoard->getShip(currentCursorPosition);
-    if (currentShip == nullptr)
+    m_currentShip = m_playerBoard->getShip(m_currentCursorPosition);
+    if (m_currentShip == nullptr)
         return;
 
-    if (currentShip->isDestroyed)
+    if (m_currentShip->isDestroyed)
         return;
 
-    shipPosition = currentCursorPosition;
-    botState = FindDirection;
+    m_shipPosition = m_currentCursorPosition;
+    m_botState = FindDirection;
     makeStep();
 }
 
 void Bot::findDirection()
 {
-    Position shootPosition = shipPosition + shootDirections[shootDirection % 4];
+    Position shootPosition = m_shipPosition + m_shootDirections[m_shootDirection % 4];
     while(shootPosition.y >= BOARD_SIZE || shootPosition.x >= BOARD_SIZE
         || shootPosition.y < 0 || shootPosition.x < 0)
     {
-        shootDirection++;
-        shootPosition = shipPosition + shootDirections[shootDirection % 4];
+        m_shootDirection++;
+        shootPosition = m_shipPosition + m_shootDirections[m_shootDirection % 4];
     }
 
-    CellType shootInfo = shoot(shootPosition, playerBoard);
+    CellType shootInfo = shoot(shootPosition, m_playerBoard);
     if (shootInfo == Missed)
     {
-        shootDirection++;
+        m_shootDirection++;
         return;
     }
     
-    if (currentShip == nullptr)
+    if (m_currentShip == nullptr)
     {
-        botState = RandomShoot;
+        m_botState = RandomShoot;
         return;
     }
 
-    if (currentShip->isDestroyed)
+    if (m_currentShip->isDestroyed)
     {
-        currentShip = nullptr;
-        botState = RandomShoot;
+        m_currentShip = nullptr;
+        m_botState = RandomShoot;
     }
     else
     {
-        currentCursorPosition = shootPosition;
-        botState = FishiningOff;
+        m_currentCursorPosition = shootPosition;
+        m_botState = FishiningOff;
     }
     makeStep();
 }
 
 void Bot::fishiningOff()
 {   
-    Position shootPosition = currentCursorPosition + shootDirections[shootDirection % 4];
-    CellType shootInfo = shoot(shootPosition, playerBoard);
-    if (currentShip == nullptr)
+    Position shootPosition = m_currentCursorPosition + m_shootDirections[m_shootDirection % 4];
+    CellType shootInfo = shoot(shootPosition, m_playerBoard);
+    if (m_currentShip == nullptr)
     {
-        botState = RandomShoot;
-        currentCursorPosition = shootPosition;
+        m_botState = RandomShoot;
+        m_currentCursorPosition = shootPosition;
         return;
     }
 
-    if (currentShip->isDestroyed)
+    if (m_currentShip->isDestroyed)
     {
-        currentShip = nullptr;
-        botState = RandomShoot;
-        currentCursorPosition = shootPosition;
+        m_currentShip = nullptr;
+        m_botState = RandomShoot;
+        m_currentCursorPosition = shootPosition;
         makeStep();
         return;
     }
@@ -91,12 +91,12 @@ void Bot::fishiningOff()
     {
         if (shootInfo == Missed)
         {
-            shootDirection = (shootDirection + 2) % 4;
-            currentCursorPosition = shipPosition;
+            m_shootDirection = (m_shootDirection + 2) % 4;
+            m_currentCursorPosition = m_shipPosition;
         }
         else
         {
-            currentCursorPosition = shootPosition;
+            m_currentCursorPosition = shootPosition;
             makeStep();
         }
     }
@@ -104,7 +104,7 @@ void Bot::fishiningOff()
 
 void Bot::makeStep()
 {
-    switch (botState)
+    switch (m_botState)
     {
     case RandomShoot:
         randomShoot();

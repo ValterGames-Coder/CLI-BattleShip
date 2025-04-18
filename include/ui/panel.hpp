@@ -7,10 +7,10 @@
 class Panel
 {
 private:
-    WINDOW* panelMenu;
-    std::vector<std::string> options;
-    unsigned short optionsSize;
+    WINDOW* m_panelMenu;
+    std::vector<std::string> m_options;
+    unsigned m_optionsSize;
 public:
     Panel(Position position, std::vector<std::string> options);
-    unsigned short getSelectedItem();
+    unsigned getSelectedItem();
 };

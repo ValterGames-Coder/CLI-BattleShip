@@ -9,9 +9,9 @@
 class MainMenuScene : public Scene
 {
 private:
-    static bool intro;
-    unsigned short selected = 0;
-    std::vector<std::string> options {"Player vs Player", "Player vs Bot", "Rules", "Exit"};
+    static bool m_intro;
+    unsigned m_selected;
+    std::vector<std::string> m_options {"Player vs Player", "Player vs Bot", "Rules", "Exit"};
 public:
     MainMenuScene();
     void load() override;

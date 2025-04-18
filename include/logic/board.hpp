@@ -21,11 +21,11 @@ class Ship;
 class Board
 {
 private:
-    WINDOW* boardWin;
-    std::map<const Position, Cell> waterMap;
-    std::map<const Position, Cell> shipMap;
-    std::map<const Position, Cell> uiMap;
-    unsigned short height, width;
+    WINDOW* m_boardWin;
+    std::map<const Position, Cell> m_waterMap;
+    std::map<const Position, Cell> m_shipMap;
+    std::map<const Position, Cell> m_uiMap;
+    unsigned short m_height, m_width;
     void drawBoard();
     void drawRectangle(Position pos1, Position pos2);
 public:

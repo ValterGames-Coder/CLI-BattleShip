@@ -22,30 +22,30 @@ short Board::clamp(short point, short min, short max)
 
 void Board::drawRectangle(Position pos1, Position pos2)
 {
-    mvwhline(boardWin, pos1.y, pos1.x, 0, pos2.x - pos1.x);
-    mvwhline(boardWin, pos2.y, pos1.x, 0, pos2.x - pos1.x);
-    mvwvline(boardWin, pos1.y, pos1.x, 0, pos2.y - pos1.y);
-    mvwvline(boardWin, pos1.y, pos2.x, 0, pos2.y - pos1.y);
-    mvwaddch(boardWin, pos1.y, pos1.x, ACS_ULCORNER);
-    mvwaddch(boardWin, pos2.y, pos1.x, ACS_LLCORNER);
-    mvwaddch(boardWin, pos1.y, pos2.x, ACS_URCORNER);
-    mvwaddch(boardWin, pos2.y, pos2.x, ACS_LRCORNER);
+    mvwhline(m_boardWin, pos1.y, pos1.x, 0, pos2.x - pos1.x);
+    mvwhline(m_boardWin, pos2.y, pos1.x, 0, pos2.x - pos1.x);
+    mvwvline(m_boardWin, pos1.y, pos1.x, 0, pos2.y - pos1.y);
+    mvwvline(m_boardWin, pos1.y, pos2.x, 0, pos2.y - pos1.y);
+    mvwaddch(m_boardWin, pos1.y, pos1.x, ACS_ULCORNER);
+    mvwaddch(m_boardWin, pos2.y, pos1.x, ACS_LLCORNER);
+    mvwaddch(m_boardWin, pos1.y, pos2.x, ACS_URCORNER);
+    mvwaddch(m_boardWin, pos2.y, pos2.x, ACS_LRCORNER);
 }
 
 std::map<const Position, Cell>& Board::getLayer(BoardLayer layer)
 {
     if (layer == UI)
-        return uiMap;
+        return m_uiMap;
     else if (layer == Ships)
-        return shipMap;
-    return waterMap;
+        return m_shipMap;
+    return m_waterMap;
 }
 
 std::vector<Position> Board::getCells(CellType type)
 {
     std::vector<Position> positions;
-    for (short y = 0; y < BOARD_SIZE; y++)
-        for (short x = 0; x < BOARD_SIZE; x++)
+    for (int y = 0; y < BOARD_SIZE; y++)
+        for (int x = 0; x < BOARD_SIZE; x++)
             if(getLayer(Water)[{y, x}].type == type)
                 positions.push_back(Position(y, x));
     return positions;
@@ -82,14 +82,14 @@ Ship* Board::getShip(Position position)
 void Board::update()
 {
     Cell cell;
-    for (short y = 0; y < BOARD_SIZE; y++)
+    for (int y = 0; y < BOARD_SIZE; y++)
     {
-        for (short x = 0; x < BOARD_SIZE; x++)
+        for (int x = 0; x < BOARD_SIZE; x++)
         {
             BoardLayer layer;
-            if (uiMap.count({y, x}))
+            if (m_uiMap.count({y, x}))
                 layer = UI;
-            else if(shipMap.count({y, x}))
+            else if(m_shipMap.count({y, x}))
                 layer = Ships;
             else
                 layer = Water;
@@ -99,40 +99,39 @@ void Board::update()
             int color = cell.color;
             if (layer == UI && cell.type == Undamaged)
                 color = canAddShip({y, x}) ? COLOR_GREEN : COLOR_RED;
-            wattron(boardWin, COLOR_PAIR(color));
-            mvwprintw(boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
-            //mvwprintw(boardWin, y + 2, x * 2 + 2, "%i", cell.type);
-            wattroff(boardWin, COLOR_PAIR(color));
+            wattron(m_boardWin, COLOR_PAIR(color));
+            mvwprintw(m_boardWin, y + 2, x * 2 + 2, "%s", cell.symbol.c_str());
+            wattroff(m_boardWin, COLOR_PAIR(color));
         }
     }
-    uiMap.clear();
+    m_uiMap.clear();
     wmove(stdscr, 0 , 0);
     refresh();
-    wrefresh(boardWin);
+    wrefresh(m_boardWin);
 }
 
 void Board::drawBoard()
 {
-    short letter = 0;
-    short number = 0;
+    unsigned letter = 0;
+    unsigned number = 0;
 
-    for (unsigned short gridY = 0; gridY < height - 1; gridY++)
+    for (int gridY = 0; gridY < m_height - 1; gridY++)
     {
-        for (unsigned short gridX = 0; gridX < width - 1; gridX++)
+        for (int gridX = 0; gridX < m_width - 1; gridX++)
         {
             if (gridY == 0)
             {
-                mvwaddch(boardWin, 0, (gridX * 2) + 3, '0' + number);
+                mvwaddch(m_boardWin, 0, (gridX * 2) + 3, '0' + number);
                 number++;
             }
             else if (gridY > 1 && gridX == 0)
             {
-                mvwaddch(boardWin, gridY, 0, 'A' + letter);
+                mvwaddch(m_boardWin, gridY, 0, 'A' + letter);
                 letter++;
             }
             else if (gridY == 1 && gridX == 1)
             {
-                drawRectangle({1, 1}, {(short)(height - 1), (short)(width - 1)});
+                drawRectangle({1, 1}, {m_height - 1, m_width - 1});
             }
             else if (gridY > 1 && gridX > 1)
             {
@@ -142,19 +141,19 @@ void Board::drawBoard()
         }
     }
     refresh();
-    wrefresh(boardWin);
+    wrefresh(m_boardWin);
 }
 
 
 Board::Board(Position boardPosition)
 {
-    height = BOARD_SIZE + 3;
-    width = BOARD_SIZE * 2 + 3;
+    m_height = BOARD_SIZE + 3;
+    m_width = BOARD_SIZE * 2 + 3;
     for (short y = 0; y < BOARD_SIZE; y++)
         for (short x = 0; x < BOARD_SIZE; x++)
             getLayer(Water)[{y, x}] = Cell(Empty);
     
-    boardWin = newwin(height, width, boardPosition.y - (height / 2), boardPosition.x - (width / 2));
+    m_boardWin = newwin(m_height, m_width, boardPosition.y - (m_height / 2), boardPosition.x - (m_width / 2));
     drawBoard();
 }
 
@@ -171,4 +170,4 @@ void Board::drawMap(Position position, std::map<const Position, Cell> map, Board
     update();
 }
 
-WINDOW* Board::getWindow() { return boardWin; }
+WINDOW* Board::getWindow() { return m_boardWin; }

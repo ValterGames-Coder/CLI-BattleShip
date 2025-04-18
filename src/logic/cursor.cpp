@@ -2,8 +2,8 @@
 
 void Cursor::setBoard(Board* board)
 {
-    this->board = board;
-    boardWin = board->getWindow();
+    this->m_board = board;
+    m_boardWin = board->getWindow();
 }
 
 Cursor::Cursor(Board* board) { setBoard(board); }
@@ -11,14 +11,14 @@ Cursor::Cursor(Board* board) { setBoard(board); }
 void Cursor::move(Position newPosition)
 {
     position = newPosition;
-    wmove(boardWin, position.y + 2, position.x * 2 + 2);
+    wmove(m_boardWin, position.y + 2, position.x * 2 + 2);
 }
 
 wchar_t Cursor::readKeyboard()
 {
-    keypad(boardWin, true);
+    keypad(m_boardWin, true);
     wchar_t input;
-    input = wgetch(boardWin);
+    input = wgetch(m_boardWin);
     switch (input)
     {
     case KEY_UP:
@@ -48,7 +48,7 @@ wchar_t Cursor::readKeyboard()
     return input;
 }
 
-void Cursor::checkCollision(std::pair<unsigned short, unsigned short> size)
+void Cursor::checkCollision(std::pair<unsigned, unsigned> size)
 {
     if (position.y + size.first > BOARD_SIZE)
         move(Position(BOARD_SIZE - size.first, position.x));
