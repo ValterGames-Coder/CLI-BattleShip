@@ -6,5 +6,4 @@
 namespace Animation
 {
     void move(WINDOW* win, Position startPosition, Position endPosition, const char* file, double seconds, unsigned short color);
-    void playAnimation(WINDOW* win, Position position, const char* dir, unsigned short color);
 }
