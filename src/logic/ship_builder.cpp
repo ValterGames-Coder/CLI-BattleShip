@@ -50,7 +50,7 @@ void deleteShip(Board* board, Position position)
 {
     Ship* ship = board->getShip(position);
     if (!ship)
-        return;
+        throw "Ship is null";
     board->drawMap(ship->cursorPosition, ship->locked, Water);
     auto it = std::find(board->ships.begin(), board->ships.end(), ship);
         if (it != board->ships.end())

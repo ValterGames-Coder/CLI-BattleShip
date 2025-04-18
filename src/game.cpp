@@ -3,8 +3,8 @@
 Game::Game()
 {
     srand(time(NULL));
-    getmaxyx(stdscr, yMax, xMax);
-    isInit = true;
+    getmaxyx(stdscr, _yMax, _xMax);
+    _isInit = true;
 }
 
 void Game::updateDialog(Board* board, Dialog* dialog, short multiply)
@@ -15,8 +15,8 @@ void Game::updateDialog(Board* board, Dialog* dialog, short multiply)
     if (dialog == nullptr)
     {
         dialog = new Dialog(Position(
-            (yMax / 2) + BOARD_SPACE_Y * 1.5,
-            (xMax / 2) + BOARD_SPACE_X * multiply
+            (_yMax / 2) + BOARD_SPACE_Y * 1.5,
+            (_xMax / 2) + BOARD_SPACE_X * multiply
         ), text, true, 18);
     }
     else
@@ -28,7 +28,7 @@ void Game::updateDialog(Board* board, Dialog* dialog, short multiply)
 void Game::setupPlayerShips(Cursor* cursor, Board* board)
 {
     wchar_t input;
-    for (auto size : playerShips)
+    for (auto size : _playerShips)
     {
         Ship* ship = new Ship(size, board);
         cursor->move({ 0, 0 });
@@ -48,7 +48,7 @@ void Game::setupPlayerShips(Cursor* cursor, Board* board)
 
 void Game::setupEnemyShips(Board* enemyBoard)
 {
-    for (auto size : enemyShips)
+    for (auto size : _enemyShips)
     {
         Ship* ship = new Ship(size, enemyBoard);
         bool canShipAdd;
@@ -66,37 +66,35 @@ void Game::setupEnemyShips(Board* enemyBoard)
 
 void Game::checkGameState()
 {
-    unsigned short enemyNumberOfShips = 
-        gameScene->enemyBoard->ships.size();
+    unsigned short enemyNumberOfShips = _gameScene->enemyBoard->ships.size();
     if (enemyNumberOfShips == 0)
     {
-        if (gameType == PlayerVSBot)
+        if (_gameType == PlayerVSBot)
         {
-            state = Win;
-            gameScene->endMenu("./img/win.txt", COLOR_YELLOW);
+            _state = Win;
+            _gameScene->endMenu("./img/win.txt", COLOR_YELLOW);
             return;
         }
         else
         {
-            state = Win;
-            gameScene->endMenu("./img/player1win.txt", COLOR_YELLOW);
+            _state = Win;
+            _gameScene->endMenu("./img/player1win.txt", COLOR_YELLOW);
             return;
         }
     }
-    unsigned short playerNumberOfShips =
-        gameScene->playerBoard->ships.size();
+    unsigned short playerNumberOfShips = _gameScene->playerBoard->ships.size();
     if (playerNumberOfShips == 0)
     {
-        if (gameType == PlayerVSBot)
+        if (_gameType == PlayerVSBot)
         {
-            state = Lose;
-            gameScene->endMenu("./img/lose.txt", COLOR_RED);
+            _state = Lose;
+            _gameScene->endMenu("./img/lose.txt", COLOR_RED);
             return;
         }
         else
         {
-            state = Win;
-            gameScene->endMenu("./img/player2win.txt", COLOR_YELLOW);
+            _state = Win;
+            _gameScene->endMenu("./img/player2win.txt", COLOR_YELLOW);
             return;
         }
     }
@@ -104,7 +102,7 @@ void Game::checkGameState()
 
 void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot)
 {
-    state = Play;
+    _state = Play;
     cursor->move({ 0, 0 });
     enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
     enemyBoard->update();
@@ -113,10 +111,10 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
     do
     {
         checkGameState();
-        if (state != Play)
+        if (_state != Play)
             break;
-        updateDialog(gameScene->playerBoard, gameScene->playerShipsDialog, -1);
-        updateDialog(gameScene->enemyBoard, gameScene->enemyShipsDialog, 1);
+        updateDialog(_gameScene->playerBoard, _gameScene->playerShipsDialog, -1);
+        updateDialog(_gameScene->enemyBoard, _gameScene->enemyShipsDialog, 1);
         currentBoard = steps % 2 == 0 ? enemyBoard : playerBoard;
         wchar_t input;
         cursor->setBoard(currentBoard);
@@ -131,7 +129,7 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
             CellType type = shoot(cursor->position, currentBoard);
             if (type == Hit)
                 continue;
-            if (gameType == PlayerVSBot)
+            if (_gameType == PlayerVSBot)
             {
                 bot->makeStep();
                 cursor->move(cursor->position);
@@ -148,11 +146,11 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
 
 void Game::startGame()
 {
-    gameScene = new GameScene();
-    Board* enemyBoard = gameScene->enemyBoard;
-    Board* playerBoard = gameScene->playerBoard;
+    _gameScene = new GameScene();
+    Board* enemyBoard = _gameScene->enemyBoard;
+    Board* playerBoard = _gameScene->playerBoard;
     Cursor* cursor = new Cursor(playerBoard);
-    if (gameType == PlayerVSBot)
+    if (_gameType == PlayerVSBot)
     {
         Bot* bot = new Bot(playerBoard);
         enemyBoard->shipsVisible = false;
@@ -160,7 +158,7 @@ void Game::startGame()
         setupEnemyShips(enemyBoard);
         gameLoop(cursor, playerBoard, enemyBoard, bot);
     }
-    else if (gameType == PlayerVSPlayer)
+    else if (_gameType == PlayerVSPlayer)
     {
         setupPlayerShips(cursor, playerBoard);
         playerBoard->shipsVisible = false;
@@ -175,26 +173,26 @@ void Game::startGame()
 
 void Game::rules()
 {
-    rulesScene = new RulesScene();
+    _rulesScene = new RulesScene();
     run();
 }
 
 void Game::run()
 {
-    if (!isInit)
-        return;
+    if (!_isInit)
+        throw "Game isn't init!";
 
-    mainMenuScene = new MainMenuScene();
-    std::string input = mainMenuScene->getInput();
+    _mainMenuScene = new MainMenuScene();
+    std::string input = _mainMenuScene->getInput();
 
     if (input == "Player vs Player")
     {
-        gameType = PlayerVSPlayer;
+        _gameType = PlayerVSPlayer;
         startGame();
     }
     else if (input == "Player vs Bot")
     {
-        gameType = PlayerVSBot;
+        _gameType = PlayerVSBot;
         startGame();
     }
     else if (input == "Rules")

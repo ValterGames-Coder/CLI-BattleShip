@@ -18,11 +18,11 @@ Position getSize(const char* fileName)
     return {height, widht};
 }
 
-void printImage(WINDOW* win, Position position, const char* fileName, unsigned short color)
+void printImage(WINDOW* win, Position position, const char* fileName, unsigned color)
 {
     std::wifstream file;
     std::wstring line;
-    unsigned short i = 0;
+    unsigned i = 0;
     std::vector<std::wstring> inputVector;
     
     wmove(win, position.y, position.x);
@@ -31,7 +31,7 @@ void printImage(WINDOW* win, Position position, const char* fileName, unsigned s
 
     file.open(fileName);
     if (!file.is_open())
-        return;
+        throw "File isn't open";
 
     while (getline(file, line))
     {

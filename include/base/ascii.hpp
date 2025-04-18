@@ -5,5 +5,5 @@
 #include <string>
 #include "base/position.hpp"
 
-void printImage(WINDOW* win, Position position, const char* fileName, unsigned short color);
+void printImage(WINDOW* win, Position position, const char* fileName, unsigned color);
 Position getSize(const char* fileName);

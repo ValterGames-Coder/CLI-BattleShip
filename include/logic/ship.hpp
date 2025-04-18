@@ -10,21 +10,19 @@ class Board;
 class Ship
 {
 private:
-    Board* gameBoard;
-    std::pair<unsigned short, unsigned short> size;
-    unsigned short health;
-    unsigned short index;
-    std::map<const Position, Cell*> map;
+    Board* m_gameBoard;
+    std::pair<unsigned, unsigned> m_size;
+    unsigned m_health;
+    std::map<const Position, Cell*> m_map;
 public:
     bool isDestroyed;
-    Ship(unsigned short lenght, Board* board);
+    Ship(unsigned lenght, Board* board);
     Position cursorPosition;
     std::map<const Position, Cell> locked;
     void rotate();
     void draw(Position position);
     void takeDamage(Position position);
-    std::pair<unsigned short, unsigned short> getSize();
+    std::pair<unsigned, unsigned> getSize();
     std::map<const Position, Cell*> getMap();
     void setCell(Cell* cell, Position position);
-    void setIndex(unsigned short index);
 };

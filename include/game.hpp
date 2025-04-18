@@ -31,16 +31,16 @@ enum GameType
 class Game
 {
 private:
-    bool isInit = false;
-    unsigned short yMax, xMax;
-    MainMenuScene* mainMenuScene = nullptr;
-    GameScene* gameScene = nullptr;
-    RulesScene* rulesScene = nullptr;
-    GameState state = Setup;
-    GameType gameType = PlayerVSBot;
+    bool _isInit = false;
+    unsigned short _yMax, _xMax;
+    MainMenuScene* _mainMenuScene = nullptr;
+    GameScene* _gameScene = nullptr;
+    RulesScene* _rulesScene = nullptr;
+    GameState _state = Setup;
+    GameType _gameType = PlayerVSBot;
 
-    unsigned short playerShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
-    unsigned short enemyShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
+    unsigned short _playerShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
+    unsigned short _enemyShips[10] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
 
     void startGame();
     void setupPlayerShips(Cursor* cursor, Board* board);
