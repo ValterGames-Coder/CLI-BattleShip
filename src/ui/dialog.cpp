@@ -27,7 +27,7 @@ void Dialog::updateDialog(std::wstring text)
 #if defined(_WIN32)
     std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
     std::string winTxt = converter.to_bytes(text);
-    waddnstr(dialogWin, winTxt.c_str(), winTxt.size());
+    waddnstr(m_dialogWin, winTxt.c_str(), winTxt.size());
 #else
     waddwstr(m_dialogWin, text.c_str());
 #endif
