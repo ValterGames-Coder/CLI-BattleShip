@@ -16,6 +16,7 @@ class Cursor;
 
 enum GameState
 {
+    Start,
     Setup,
     Play,
     Win,
@@ -24,6 +25,7 @@ enum GameState
 
 enum GameType
 {
+    Null,
     PlayerVSPlayer,
     PlayerVSBot
 };
@@ -47,6 +49,7 @@ private:
     void setupEnemyShips(Board* enemyBoard);
     void gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot = nullptr);
     void updateDialog(Board* board, Dialog* dialog, int multiply);
+    void updateCursor(Cursor* cursor, Board* board);
     void checkGameState();
     void rules();
 public:

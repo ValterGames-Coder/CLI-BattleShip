@@ -2,7 +2,7 @@
 
 void Cursor::setBoard(Board* board)
 {
-    this->m_board = board;
+    m_board = board;
     m_boardWin = board->getWindow();
 }
 

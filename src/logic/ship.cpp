@@ -3,6 +3,7 @@
 
 Ship::Ship(unsigned lenght, Board* board)
 {
+    isDestroyed = false;
     m_size = {1, lenght};
     m_health = lenght;
     m_gameBoard = board; 

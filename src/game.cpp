@@ -4,6 +4,8 @@ Game::Game()
 {
     srand(time(NULL));
     getmaxyx(stdscr, m_yMax, m_xMax);
+    m_gameType = Null;
+    m_state = Start;
     m_isInit = true;
 }
 
@@ -100,14 +102,20 @@ void Game::checkGameState()
     }
 }
 
+void Game::updateCursor(Cursor* cursor, Board* board)
+{
+    cursor->setBoard(board);
+    board->drawCell(cursor->position, Cell(Aim), UI);
+    board->update();
+}
+
 void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* bot)
 {
     m_state = Play;
-    cursor->move({ 0, 0 });
-    enemyBoard->drawCell(cursor->position, Cell(Aim), UI);
-    enemyBoard->update();
     unsigned steps = 0;
     Board* currentBoard;
+    Position enemyCursorPosition, playerCursorPosition;
+    cursor->move({ 0, 0 });
     do
     {
         checkGameState();
@@ -117,11 +125,9 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
         updateDialog(m_gameScene->enemyBoard, m_gameScene->enemyShipsDialog, 1);
         currentBoard = steps % 2 == 0 ? enemyBoard : playerBoard;
         wchar_t input;
-        cursor->setBoard(currentBoard);
+        updateCursor(cursor, currentBoard);
         input = cursor->readKeyboard();
         cursor->checkCollision({ 1, 1 });
-        currentBoard->drawCell(cursor->position, Cell(Aim), UI);
-        currentBoard->update();
         if (input == 10) {
             bool canShoot = currentBoard->canShoot(cursor->position);
             if (!canShoot)
@@ -130,15 +136,15 @@ void Game::gameLoop(Cursor* cursor, Board* playerBoard, Board* enemyBoard, Bot* 
             if (type == Hit)
                 continue;
             if (m_gameType == PlayerVSBot)
-            {
                 bot->makeStep();
-                cursor->move(cursor->position);
-            }
             else
-            {
                 steps++;
-            }
+            cursor->move(steps % 2 == 0 ? enemyCursorPosition : playerCursorPosition);
         }
+        if (steps % 2 == 0)
+            enemyCursorPosition = cursor->position;
+        else
+            playerCursorPosition = cursor->position;
     } while (1);
     getch();
     run();
