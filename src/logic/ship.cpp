@@ -20,7 +20,7 @@ void Ship::draw(Position position)
 
 void Ship::takeDamage(Position position)
 {
-    if (isDestroyed)
+    if (isDestroyed == true)
         return;
     (*m_map[position]).updateType(Hit);
     m_health--;
