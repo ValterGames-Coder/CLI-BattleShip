@@ -3,6 +3,8 @@
 
 Ship::Ship(unsigned lenght, Board* board)
 {
+    if (lenght == 0)
+        throw "Ship::lenght can't be 0!";
     isDestroyed = false;
     m_size = {1, lenght};
     m_health = lenght;

@@ -2,6 +2,8 @@
 
 Dialog::Dialog(Position dialogPosition, std::wstring text, bool staticSize = false, unsigned size = 0)
 {
+    if (text.size() == 0)
+        throw "Dialog::Text lenght is 0!";
     curs_set(0);
     m_dialogPosition = dialogPosition;
     this->staticSize = staticSize;

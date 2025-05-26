@@ -3,6 +3,8 @@
 
 Panel::Panel(Position position, std::vector<std::string> options)
 {
+    if (options.size() == 0)
+        throw "Panel::Options size is 0!";
     m_options = options;
     m_optionsSize = m_options.size();
     std::string max_element = "";

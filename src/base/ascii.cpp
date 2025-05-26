@@ -7,7 +7,7 @@ Position getSize(const char* fileName)
     int widht = 0, height = 0;
     file.open(fileName);
     if (!file.is_open())
-        return {-1, -1};
+        throw "File isn't open";
 
     while (getline(file, line))
     {
