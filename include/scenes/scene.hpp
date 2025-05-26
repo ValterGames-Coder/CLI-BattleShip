@@ -4,7 +4,7 @@
 class Scene
 {
 protected:
-    unsigned short xMax, yMax;
+    unsigned xMax, yMax;
     WINDOW* sceneWin;
 public:
     Scene();

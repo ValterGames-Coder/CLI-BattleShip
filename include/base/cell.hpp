@@ -17,7 +17,7 @@ struct Cell
 
     CellType type;
     std::string symbol;
-    unsigned short color;
+    unsigned color;
 
     void updateType(CellType type)
     {
