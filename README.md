@@ -27,7 +27,8 @@ A terminal-based implementation of the classic Battleship game with C++ and NCur
    sudo apt-get install build-essential cmake libncursesw5-dev
 
    # Fedora
-   sudo dnf install gcc-c++ cmake ncurses-devel
+   sudo dnf install gcc-c++ cmake ncurses-devel ncurses-compat-libs
+   sudo ln -s /usr/lib64/libncursesw.so.6 /usr/lib64/libtinfow.so.6
    ```
 
 2. Clone and build:
